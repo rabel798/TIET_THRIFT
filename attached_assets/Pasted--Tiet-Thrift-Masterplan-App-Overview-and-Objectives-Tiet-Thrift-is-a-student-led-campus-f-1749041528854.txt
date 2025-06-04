@@ -1,0 +1,163 @@
+# Tiet Thrift: Masterplan
+
+## 📌 App Overview and Objectives
+
+Tiet Thrift is a student-led, campus-focused web app for buying and selling secondhand goods within Thapar University. It is designed to:
+
+- Reduce waste and clutter in dorms
+- Make student life more affordable
+- Promote community-driven reuse
+
+No payments are handled on the platform — contact is initiated via WhatsApp, and all listings auto-expire in 30 days.
+
+---
+
+## 🎯 Target Audience
+
+- All current students of Thapar Institute of Engineering & Technology
+- Must have a verified @thapar.edu email to access and interact with the platform
+
+---
+
+## 🚀 Core Features and Functionality
+
+- *Google Login (with @thapar.edu domain restriction)*
+- *Fallback email sign-up* with OTP verification (if needed)
+- *Create/Edit/Delete Listings* with:
+  - Up to 3 images
+  - Title, Price, Quality, Description, Tags, Category
+- *Automatic listing expiration* after 30 days
+- *View Seller Profile* with all active listings by that user
+- *Search & Filters* for category, price range, tags
+- *WhatsApp Contact Button* to directly reach seller with listing pre-filled
+- *User Dashboard*:
+  - View/edit profile (bio, username)
+  - View/edit/delete own listings
+- *No messaging/chat feature on platform*
+
+---
+
+## 🧱 High-Level Technical Stack
+
+| Layer         | Tech Recommendation                              | Notes                                                          |
+| ------------- | ------------------------------------------------ | -------------------------------------------------------------- |
+| Frontend      | Next.js + Tailwind CSS                           | For modern UI and easy Vercel deployment                       |
+| Hosting       | Vercel                                           | Free, fast, GitHub integration                                 |
+| Auth          | Supabase Auth (Google + optional email fallback) | Easy setup for @thapar.edu login                               |
+| Backend       | Supabase (Database + Storage)                    | Simple SQL-style database, built-in storage for images         |
+| Image Storage | Supabase or Cloudinary                           | Use Supabase for simplicity, Cloudinary if image features grow |
+| Analytics     | Umami                                            | Free, privacy-focused, and Vercel-friendly                     |
+
+---
+
+## 🗃 Conceptual Data Model (Simplified)
+
+### Users
+
+- ID (from Supabase auth)
+- Name (auto from login)
+- Email (must be @thapar.edu)
+- Bio
+- Username
+
+### Listings
+
+- ID
+- User ID (FK)
+- Title
+- Description
+- Price
+- Quality (e.g., Like New, Good, Fair)
+- Tags (max 5)
+- Category (Books, Electronics, etc.)
+- Image URLs (up to 3)
+- Created At
+- Expires At (auto 30 days)
+
+---
+
+## 🎨 UI Design Principles
+
+- Mobile-first, responsive design
+- Clean, minimal layout with white space and soft accents
+- Apple-style aesthetic: smooth shadows, readable typography, fluid animations
+- Prioritize image visibility and scan-ability
+
+---
+
+## 🔐 Security Considerations
+
+- Restrict access to verified Thapar email accounts
+- Supabase handles secure auth & database access
+- No sensitive data (e.g., passwords) stored manually
+- Sanitize all user inputs for tags, titles, and descriptions
+
+---
+
+## 🧭 Conceptual Layout
+
+### Home Page
+
+- Hero section with logo and tagline ("Declutter, Connect, Reuse")
+- How it works section
+- Safety Tips and Meet-up Guidelines
+- Call to action to log in or explore listings
+
+### Listings Page
+
+- Search bar + category filter + price slider
+- Listing cards (image, title, price, brief info)
+- Click on card to open listing detail:
+  - Full info + seller's contact (WhatsApp + Email)
+  - View more listings from this seller
+
+### User Dashboard
+
+- Edit profile (bio, username)
+- See your active listings with edit/delete buttons
+- Option to add new listing
+
+---
+
+## 🛠 Development Milestones
+
+1. *Phase 1: Core MVP*
+   - Google login + Supabase setup
+   - Listing creation and browsing
+   - WhatsApp contact integration
+2. *Phase 2: Dashboard + Expiry Logic*
+   - User profile management
+   - Auto-delete after 30 days
+3. *Phase 3: Search/Filter + Mini Seller Pages*
+   - Filters, tags, categories
+   - View more from this seller
+4. *Phase 4: Analytics + Polish*
+   - Integrate Umami
+   - UI refinement
+
+---
+
+## ⚠ Potential Challenges & Solutions
+
+- *Image storage limits* → Use image compression, enforce 3-image max
+- *Spam listings* → Could add report button in future, or require email verification step
+- *Keeping listings fresh* → 30-day expiry ensures relevance
+- *Non-tech users* → Clean onboarding and instructions on home page
+
+---
+
+## 🌱 Future Expansion Ideas
+
+- Add optional in-app chat later
+- Feature popular listings
+- Add verification badge for active/responsive sellers
+- Push notifications via email for new listings in a category
+- Extend to nearby universities or alumni
+
+---
+
+Built with love for the Thapar community. ❤
+
+---
+
+Let me know if you want any edits or additions to this plan!
