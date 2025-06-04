@@ -1,26 +1,68 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Hero Section -->
+<!-- Hero Section with Animated Background -->
 <section class="hero-section">
-    <div class="container">
+    <!-- Crazy Animated Background -->
+    <div class="animated-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+            <div class="shape shape-5"></div>
+            <div class="shape shape-6"></div>
+            <div class="shape shape-7"></div>
+            <div class="shape shape-8"></div>
+        </div>
+        <div class="wave-animation">
+            <div class="wave wave-1"></div>
+            <div class="wave wave-2"></div>
+            <div class="wave wave-3"></div>
+        </div>
+        <div class="particle-field">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <div class="container position-relative">
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
-                <h1 class="hero-title fade-in">Declutter • Connect • Reuse</h1>
-                <p class="hero-subtitle fade-in">The student marketplace for Thapar University. Buy and sell secondhand items within our campus community.</p>
-                <div class="fade-in">
+                <h1 class="hero-title animate-fade-in-up">Declutter • Connect • Reuse</h1>
+                <p class="hero-subtitle animate-fade-in-up animation-delay-200">The student marketplace for Thapar University. Buy and sell secondhand items within our campus community.</p>
+                <div class="animate-fade-in-up animation-delay-400">
                     {% if current_user.is_authenticated %}
-                        <a href="{{ url_for('create_listing') }}" class="btn btn-light btn-lg me-3">
+                        <a href="{{ url_for('create_listing') }}" class="btn btn-light btn-lg me-3 btn-hover-lift">
                             <i class="fas fa-plus me-2"></i>Create Listing
                         </a>
-                        <a href="{{ url_for('listings') }}" class="btn btn-outline-light btn-lg">
+                        <a href="{{ url_for('listings') }}" class="btn btn-outline-light btn-lg btn-hover-lift">
                             <i class="fas fa-search me-2"></i>Browse Items
                         </a>
                     {% else %}
-                        <a href="{{ url_for('google_auth.login') }}" class="btn btn-light btn-lg me-3">
+                        <a href="{{ url_for('google_auth.login') }}" class="btn btn-light btn-lg me-3 btn-hover-lift">
                             <i class="fab fa-google me-2"></i>Get Started
                         </a>
-                        <a href="{{ url_for('listings') }}" class="btn btn-outline-light btn-lg">
+                        <a href="{{ url_for('listings') }}" class="btn btn-outline-light btn-lg btn-hover-lift">
                             <i class="fas fa-search me-2"></i>Browse Items
                         </a>
                     {% endif %}
@@ -30,43 +72,61 @@
     </div>
 </section>
 
-<!-- How It Works Section -->
-<section class="py-5">
-    <div class="container">
+<!-- How It Works Section with Scrolling Background -->
+<section class="py-5 section-fade-in position-relative">
+    <div class="section-background">
+        <div class="scrolling-lines">
+            <div class="line line-1"></div>
+            <div class="line line-2"></div>
+            <div class="line line-3"></div>
+            <div class="line line-4"></div>
+            <div class="line line-5"></div>
+        </div>
+        <div class="floating-icons">
+            <i class="fas fa-graduation-cap floating-icon icon-1"></i>
+            <i class="fas fa-camera floating-icon icon-2"></i>
+            <i class="fab fa-whatsapp floating-icon icon-3"></i>
+            <i class="fas fa-handshake floating-icon icon-4"></i>
+            <i class="fas fa-shield-alt floating-icon icon-5"></i>
+            <i class="fas fa-recycle floating-icon icon-6"></i>
+        </div>
+    </div>
+
+    <div class="container position-relative">
         <div class="row justify-content-center mb-5">
             <div class="col-lg-8 text-center">
-                <h2 class="mb-4">How Tiet Thrift Works</h2>
-                <p class="text-muted">Simple, safe, and designed for our campus community</p>
+                <h2 class="mb-4 section-title">How Tiet Thrift Works</h2>
+                <p class="text-muted section-subtitle">Simple, safe, and designed for our campus community</p>
             </div>
         </div>
-        
+
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="mb-3">
-                        <i class="fas fa-user-graduate fa-3x text-primary"></i>
+                <div class="card h-100 text-center p-4 card-hover-effect card-fade-in" data-delay="0">
+                    <div class="mb-3 icon-container">
+                        <i class="fas fa-user-graduate fa-3x text-primary icon-float"></i>
                     </div>
-                    <h5>Sign Up with Thapar Email</h5>
+                    <h5 class="card-title-enhanced">Sign Up with Thapar Email</h5>
                     <p class="text-muted">Use your @thapar.edu email to join our verified student community</p>
                 </div>
             </div>
-            
+
             <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="mb-3">
-                        <i class="fas fa-camera fa-3x text-success"></i>
+                <div class="card h-100 text-center p-4 card-hover-effect card-fade-in" data-delay="200">
+                    <div class="mb-3 icon-container">
+                        <i class="fas fa-camera fa-3x text-success icon-float"></i>
                     </div>
-                    <h5>List Your Items</h5>
+                    <h5 class="card-title-enhanced">List Your Items</h5>
                     <p class="text-muted">Upload photos, set your price, and describe your item. Listings auto-expire in 30 days</p>
                 </div>
             </div>
-            
+
             <div class="col-md-4">
-                <div class="card h-100 text-center p-4">
-                    <div class="mb-3">
-                        <i class="fab fa-whatsapp fa-3x text-success"></i>
+                <div class="card h-100 text-center p-4 card-hover-effect card-fade-in" data-delay="400">
+                    <div class="mb-3 icon-container">
+                        <i class="fab fa-whatsapp fa-3x text-success icon-float"></i>
                     </div>
-                    <h5>Connect & Trade</h5>
+                    <h5 class="card-title-enhanced">Connect & Trade</h5>
                     <p class="text-muted">Contact sellers directly via WhatsApp. Meet safely on campus to complete your transaction</p>
                 </div>
             </div>
@@ -74,52 +134,81 @@
     </div>
 </section>
 
-<!-- Recent Listings Section -->
+<!-- Recent Listings Section with Matrix Background -->
 {% if recent_listings %}
-<section class="py-5 bg-light">
-    <div class="container">
+<section class="py-5 bg-gradient-light section-fade-in position-relative">
+    <div class="matrix-background">
+        <div class="matrix-rain">
+            <div class="matrix-column" style="left: 5%; animation-delay: 0s;"></div>
+            <div class="matrix-column" style="left: 15%; animation-delay: 1s;"></div>
+            <div class="matrix-column" style="left: 25%; animation-delay: 2s;"></div>
+            <div class="matrix-column" style="left: 35%; animation-delay: 0.5s;"></div>
+            <div class="matrix-column" style="left: 45%; animation-delay: 1.5s;"></div>
+            <div class="matrix-column" style="left: 55%; animation-delay: 0.8s;"></div>
+            <div class="matrix-column" style="left: 65%; animation-delay: 2.2s;"></div>
+            <div class="matrix-column" style="left: 75%; animation-delay: 1.2s;"></div>
+            <div class="matrix-column" style="left: 85%; animation-delay: 0.3s;"></div>
+            <div class="matrix-column" style="left: 95%; animation-delay: 1.8s;"></div>
+        </div>
+        <div class="geometric-shapes">
+            <div class="geo-shape triangle-1"></div>
+            <div class="geo-shape circle-1"></div>
+            <div class="geo-shape square-1"></div>
+            <div class="geo-shape triangle-2"></div>
+            <div class="geo-shape circle-2"></div>
+        </div>
+    </div>
+
+    <div class="container position-relative">
         <div class="row justify-content-center mb-5">
             <div class="col-lg-8 text-center">
-                <h2 class="mb-4">Recent Listings</h2>
-                <p class="text-muted">Check out what your fellow students are selling</p>
+                <h2 class="mb-4 section-title">Recent Listings</h2>
+                <p class="text-muted section-subtitle">Check out what your fellow students are selling</p>
             </div>
         </div>
-        
+
         <div class="row g-4">
             {% for listing in recent_listings %}
             <div class="col-lg-4 col-md-6">
-                <div class="card listing-card h-100">
-                    {% if listing.images %}
-                        <img src="{{ url_for('static', filename=listing.images[0].replace('static/', '')) }}" 
-                             class="card-img-top" alt="{{ listing.title }}">
-                    {% else %}
-                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center">
-                            <i class="fas fa-image fa-3x text-muted"></i>
+                <div class="card listing-card h-100 card-hover-effect card-fade-in" data-delay="{{ loop.index0 * 100 }}">
+                    <div class="listing-image-container">
+                        {% if listing.images %}
+                            <img src="{{ url_for('static', filename=listing.images[0].replace('static/', '')) }}" 
+                                 class="card-img-top listing-image" alt="{{ listing.title }}">
+                        {% else %}
+                            <div class="card-img-top bg-gradient-placeholder d-flex align-items-center justify-content-center">
+                                <i class="fas fa-image fa-3x text-muted"></i>
+                            </div>
+                        {% endif %}
+                        <div class="image-overlay">
+                            <div class="overlay-content">
+                                <i class="fas fa-eye fa-2x"></i>
+                            </div>
                         </div>
-                    {% endif %}
-                    
+                    </div>
+
                     <div class="card-body d-flex flex-column">
                         <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="card-title mb-0">{{ listing.title }}</h5>
-                            <span class="listing-quality quality-{{ listing.quality.lower().replace(' ', '-') }}">
+                            <h5 class="card-title mb-0 listing-title">{{ listing.title }}</h5>
+                            <span class="listing-quality quality-{{ listing.quality.lower().replace(' ', '-') }} pulse-badge">
                                 {{ listing.quality }}
                             </span>
                         </div>
-                        
-                        <p class="listing-price mb-2">₹{{ "{:,.0f}".format(listing.price) }}</p>
+
+                        <p class="listing-price mb-2 price-highlight">₹{{ "{:,.0f}".format(listing.price) }}</p>
                         <p class="card-text text-muted small mb-3">{{ listing.description[:100] }}{% if listing.description|length > 100 %}...{% endif %}</p>
-                        
+
                         <div class="mt-auto">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <small class="text-muted user-info">
                                     <i class="fas fa-user me-1"></i>{{ listing.user.username }}
                                 </small>
-                                <small class="text-muted">
+                                <small class="text-muted time-info">
                                     <i class="fas fa-clock me-1"></i>{{ listing.days_remaining }} days left
                                 </small>
                             </div>
                             <a href="{{ url_for('listing_detail', listing_id=listing.id) }}" 
-                               class="btn btn-primary w-100 mt-2">
+                               class="btn btn-primary w-100 btn-hover-lift btn-gradient">
                                 View Details
                             </a>
                         </div>
@@ -128,9 +217,9 @@
             </div>
             {% endfor %}
         </div>
-        
+
         <div class="text-center mt-4">
-            <a href="{{ url_for('listings') }}" class="btn btn-outline-primary">
+            <a href="{{ url_for('listings') }}" class="btn btn-outline-primary btn-lg btn-hover-lift">
                 <i class="fas fa-arrow-right me-2"></i>View All Listings
             </a>
         </div>
@@ -138,38 +227,62 @@
 </section>
 {% endif %}
 
-<!-- Safety Guidelines Section -->
-<section class="py-5">
-    <div class="container">
+<!-- Safety Guidelines Section with Spiral Background -->
+<section class="py-5 section-fade-in position-relative">
+    <div class="spiral-background">
+        <div class="spiral spiral-1"></div>
+        <div class="spiral spiral-2"></div>
+        <div class="spiral spiral-3"></div>
+        <div class="data-stream">
+            <div class="stream stream-1"></div>
+            <div class="stream stream-2"></div>
+            <div class="stream stream-3"></div>
+            <div class="stream stream-4"></div>
+        </div>
+    </div>
+
+    <div class="container position-relative">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="card">
+                <div class="card safety-card card-hover-effect">
                     <div class="card-body text-center p-5">
-                        <h3 class="mb-4"><i class="fas fa-shield-alt text-success me-2"></i>Stay Safe While Trading</h3>
-                        
+                        <div class="safety-icon-container mb-4">
+                            <i class="fas fa-shield-alt text-success safety-icon"></i>
+                        </div>
+                        <h3 class="mb-4 safety-title">Stay Safe While Trading</h3>
+
                         <div class="row g-4">
                             <div class="col-md-6">
-                                <h5><i class="fas fa-map-marker-alt text-primary me-2"></i>Meet Safely</h5>
-                                <ul class="list-unstyled text-start">
-                                    <li>• Meet in public campus areas</li>
-                                    <li>• Bring a friend if needed</li>
-                                    <li>• Choose well-lit locations</li>
-                                    <li>• Trust your instincts</li>
-                                </ul>
+                                <div class="safety-section">
+                                    <h5 class="safety-subtitle">
+                                        <i class="fas fa-map-marker-alt text-primary me-2"></i>Meet Safely
+                                    </h5>
+                                    <ul class="list-unstyled text-start safety-list">
+                                        <li class="safety-item">• Meet in public campus areas</li>
+                                        <li class="safety-item">• Bring a friend if needed</li>
+                                        <li class="safety-item">• Choose well-lit locations</li>
+                                        <li class="safety-item">• Trust your instincts</li>
+                                    </ul>
+                                </div>
                             </div>
-                            
+
                             <div class="col-md-6">
-                                <h5><i class="fas fa-handshake text-success me-2"></i>Trade Smart</h5>
-                                <ul class="list-unstyled text-start">
-                                    <li>• Inspect items before buying</li>
-                                    <li>• Test electronics if possible</li>
-                                    <li>• Agree on price beforehand</li>
-                                    <li>• Keep conversations respectful</li>
-                                </ul>
+                                <div class="safety-section">
+                                    <h5 class="safety-subtitle">
+                                        <i class="fas fa-handshake text-success me-2"></i>Trade Smart
+                                    </h5>
+                                    <ul class="list-unstyled text-start safety-list">
+                                        <li class="safety-item">• Inspect items before buying</li>
+                                        <li class="safety-item">• Test electronics if possible</li>
+                                        <li class="safety-item">• Agree on price beforehand</li>
+                                        <li class="safety-item">• Keep conversations respectful</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="alert alert-info mt-4">
+
+                        <div class="alert alert-info mt-4 custom-alert">
+                            <i class="fas fa-info-circle me-2"></i>
                             <strong>Note:</strong> Tiet Thrift facilitates connections only. All transactions are between students. 
                             We don't handle payments or guarantee transactions.
                         </div>
@@ -180,15 +293,50 @@
     </div>
 </section>
 
-<!-- Call to Action -->
+<!-- Call to Action with Cosmic Background -->
 {% if not current_user.is_authenticated %}
-<section class="py-5 bg-primary text-white">
-    <div class="container">
+<section class="py-5 cta-section section-fade-in position-relative">
+    <div class="cosmic-background">
+        <div class="stars-field">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+        <div class="nebula-clouds">
+            <div class="cloud cloud-1"></div>
+            <div class="cloud cloud-2"></div>
+            <div class="cloud cloud-3"></div>
+        </div>
+        <div class="energy-beams">
+            <div class="beam beam-1"></div>
+            <div class="beam beam-2"></div>
+            <div class="beam beam-3"></div>
+        </div>
+    </div>
+
+    <div class="container position-relative">
         <div class="row justify-content-center text-center">
             <div class="col-lg-8">
-                <h2 class="mb-4">Ready to Start Trading?</h2>
-                <p class="mb-4">Join the Thapar student community and start buying and selling today!</p>
-                <a href="{{ url_for('google_auth.login') }}" class="btn btn-light btn-lg">
+                <h2 class="mb-4 cta-title">Ready to Start Trading?</h2>
+                <p class="mb-4 cta-subtitle">Join the Thapar student community and start buying and selling today!</p>
+                <a href="{{ url_for('google_auth.login') }}" class="btn btn-light btn-lg btn-hover-lift cta-button">
                     <i class="fab fa-google me-2"></i>Sign Up with Google
                 </a>
             </div>
@@ -200,24 +348,753 @@
 
 {% block scripts %}
 <script>
-    // Add animation on scroll
+    // Enhanced animation on scroll with crazy background effects
     document.addEventListener('DOMContentLoaded', function() {
+        // Smooth scrolling for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced intersection observer
         const observerOptions = {
-            threshold: 0.1,
+            threshold: [0, 0.1, 0.2, 0.3],
             rootMargin: '0px 0px -50px 0px'
         };
-        
+
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
+                    const delay = entry.target.dataset.delay || 0;
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-in');
+                    }, delay);
                 }
             });
         }, observerOptions);
-        
-        document.querySelectorAll('.card').forEach(card => {
-            observer.observe(card);
+
+        document.querySelectorAll('.card-fade-in, .section-fade-in').forEach(element => {
+            observer.observe(element);
+        });
+
+        // Crazy scroll-based animations
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+
+            // Hero parallax
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+                heroSection.style.transform = `translateY(${rate}px)`;
+            }
+
+            // Floating shapes animation
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                const speed = 0.3 + (index * 0.1);
+                const rotation = scrolled * (0.1 + index * 0.05);
+                const yPos = -(scrolled * speed);
+                shape.style.transform = `translateY(${yPos}px) rotate(${rotation}deg)`;
+            });
+
+            // Scrolling lines animation
+            const lines = document.querySelectorAll('.line');
+            lines.forEach((line, index) => {
+                const speed = 0.8 + (index * 0.2);
+                const xPos = (scrolled * speed) % window.innerWidth;
+                line.style.transform = `translateX(${xPos - window.innerWidth}px)`;
+            });
+
+            // Matrix rain effect
+            const matrixColumns = document.querySelectorAll('.matrix-column');
+            matrixColumns.forEach((column, index) => {
+                const speed = 2 + (index * 0.5);
+                const yPos = (scrolled * speed) % (window.innerHeight + 200);
+                column.style.transform = `translateY(${yPos - 200}px)`;
+            });
+
+            // Geometric shapes rotation
+            const geoShapes = document.querySelectorAll('.geo-shape');
+            geoShapes.forEach((shape, index) => {
+                const rotation = scrolled * (0.2 + index * 0.1);
+                const scale = 1 + Math.sin(scrolled * 0.01 + index) * 0.2;
+                shape.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+            });
+
+            // Spiral animation
+            const spirals = document.querySelectorAll('.spiral');
+            spirals.forEach((spiral, index) => {
+                const rotation = scrolled * (0.5 + index * 0.2);
+                spiral.style.transform = `rotate(${rotation}deg)`;
+            });
+
+            // Data streams
+            const streams = document.querySelectorAll('.stream');
+            streams.forEach((stream, index) => {
+                const speed = 1.5 + (index * 0.3);
+                const yPos = (scrolled * speed) % (window.innerHeight + 100);
+                stream.style.transform = `translateY(${yPos - 100}px)`;
+            });
+
+            // Stars twinkling based on scroll
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                const twinkle = Math.sin(scrolled * 0.01 + index) * 0.5 + 0.5;
+                star.style.opacity = twinkle;
+            });
+
+            // Energy beams
+            const beams = document.querySelectorAll('.beam');
+            beams.forEach((beam, index) => {
+                const intensity = Math.sin(scrolled * 0.02 + index * 2) * 0.3 + 0.7;
+                beam.style.opacity = intensity;
+            });
+
+            // Floating icons
+            const floatingIcons = document.querySelectorAll('.floating-icon');
+            floatingIcons.forEach((icon, index) => {
+                const speed = 0.4 + (index * 0.1);
+                const yPos = Math.sin(scrolled * 0.01 + index) * 20;
+                const xPos = Math.cos(scrolled * 0.008 + index) * 15;
+                icon.style.transform = `translate(${xPos}px, ${yPos}px)`;
+            });
+        });
+
+        // Add hover effects to cards
+        document.querySelectorAll('.card-hover-effect').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.03) rotateX(5deg)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+            });
+        });
+
+        // Typing effect for hero title
+        const heroTitle = document.querySelector('.hero-title');
+        if (heroTitle) {
+            const text = heroTitle.textContent;
+            heroTitle.textContent = '';
+            let i = 0;
+            const typeWriter = () => {
+                if (i < text.length) {
+                    heroTitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 80);
+                }
+            };
+            setTimeout(typeWriter, 500);
+        }
+
+        // Staggered animation for safety items
+        const safetyItems = document.querySelectorAll('.safety-item');
+        safetyItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('slide-in-left');
+            }, index * 150);
+        });
+
+        // Enhanced price counter animation
+        document.querySelectorAll('.price-highlight').forEach(price => {
+            const finalPrice = parseInt(price.textContent.replace(/[^\d]/g, ''));
+            let currentPrice = 0;
+            const increment = finalPrice / 60;
+            const counter = setInterval(() => {
+                currentPrice += increment;
+                if (currentPrice >= finalPrice) {
+                    currentPrice = finalPrice;
+                    clearInterval(counter);
+                }
+                price.textContent = '₹' + Math.floor(currentPrice).toLocaleString();
+            }, 25);
+        });
+
+        // Mouse movement parallax effect
+        document.addEventListener('mousemove', function(e) {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            // Move floating shapes based on mouse
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed * 20;
+                const y = (mouseY - 0.5) * speed * 20;
+                shape.style.transform += ` translate(${x}px, ${y}px)`;
+            });
         });
     });
 </script>
+
+<style>
+    /* Neue Montreal Font and Enhanced Animations */
+    @import url('https://fonts.googleapis.com/css2?family=Neue+Montreal:wght@300;400;500;600;700;800&display=swap');
+
+    /* Override font family */
+    body, .hero-title, .section-title, .card-title-enhanced, .safety-title, .cta-title {
+        font-family: 'Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    /* Crazy Background Animations */
+    .animated-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+        animation: floatShape 8s ease-in-out infinite;
+    }
+
+    .shape-1 { width: 80px; height: 80px; top: 10%; left: 10%; animation-delay: 0s; }
+    .shape-2 { width: 120px; height: 120px; top: 20%; right: 15%; animation-delay: 2s; }
+    .shape-3 { width: 60px; height: 60px; top: 60%; left: 20%; animation-delay: 4s; }
+    .shape-4 { width: 100px; height: 100px; top: 70%; right: 25%; animation-delay: 1s; }
+    .shape-5 { width: 40px; height: 40px; top: 30%; left: 60%; animation-delay: 3s; }
+    .shape-6 { width: 90px; height: 90px; top: 80%; left: 70%; animation-delay: 5s; }
+    .shape-7 { width: 70px; height: 70px; top: 15%; left: 80%; animation-delay: 1.5s; }
+    .shape-8 { width: 110px; height: 110px; top: 50%; right: 10%; animation-delay: 3.5s; }
+
+    @keyframes floatShape {
+        0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+        25% { transform: translateY(-20px) rotate(90deg) scale(1.1); }
+        50% { transform: translateY(-40px) rotate(180deg) scale(0.9); }
+        75% { transform: translateY(-20px) rotate(270deg) scale(1.05); }
+    }
+
+    .wave-animation {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100px;
+    }
+
+    .wave {
+        position: absolute;
+        bottom: 0;
+        width: 200%;
+        height: 100px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        animation: waveMove 6s linear infinite;
+    }
+
+    .wave-1 { animation-delay: 0s; }
+    .wave-2 { animation-delay: 2s; }
+    .wave-3 { animation-delay: 4s; }
+
+    @keyframes waveMove {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(0%); }
+    }
+
+    .particle-field {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 50%;
+        animation: particleFloat 4s ease-in-out infinite;
+    }
+
+    .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { top: 40%; left: 20%; animation-delay: 0.5s; }
+    .particle:nth-child(3) { top: 60%; left: 30%; animation-delay: 1s; }
+    .particle:nth-child(4) { top: 80%; left: 40%; animation-delay: 1.5s; }
+    .particle:nth-child(5) { top: 30%; left: 50%; animation-delay: 2s; }
+    .particle:nth-child(6) { top: 70%; left: 60%; animation-delay: 2.5s; }
+    .particle:nth-child(7) { top: 10%; left: 70%; animation-delay: 3s; }
+    .particle:nth-child(8) { top: 50%; left: 80%; animation-delay: 3.5s; }
+    .particle:nth-child(9) { top: 90%; left: 90%; animation-delay: 4s; }
+    .particle:nth-child(10) { top: 25%; left: 85%; animation-delay: 0.2s; }
+    .particle:nth-child(11) { top: 45%; left: 75%; animation-delay: 0.7s; }
+    .particle:nth-child(12) { top: 65%; left: 65%; animation-delay: 1.2s; }
+    .particle:nth-child(13) { top: 85%; left: 55%; animation-delay: 1.7s; }
+    .particle:nth-child(14) { top: 35%; left: 45%; animation-delay: 2.2s; }
+    .particle:nth-child(15) { top: 75%; left: 35%; animation-delay: 2.7s; }
+    .particle:nth-child(16) { top: 15%; left: 25%; animation-delay: 3.2s; }
+    .particle:nth-child(17) { top: 55%; left: 15%; animation-delay: 3.7s; }
+    .particle:nth-child(18) { top: 95%; left: 5%; animation-delay: 4.2s; }
+    .particle:nth-child(19) { top: 5%; left: 95%; animation-delay: 0.3s; }
+    .particle:nth-child(20) { top: 85%; left: 25%; animation-delay: 0.8s; }
+
+    @keyframes particleFloat {
+        0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+        50% { transform: translateY(-30px) scale(1.2); opacity: 1; }
+    }
+
+    .grid-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+        animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(50px, 50px); }
+    }
+
+    /* Section Backgrounds */
+    .section-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        opacity: 0.1;
+    }
+
+    .scrolling-lines {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .line {
+        position: absolute;
+        width: 200px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+        animation: lineScroll 8s linear infinite;
+    }
+
+    .line-1 { top: 20%; animation-delay: 0s; }
+    .line-2 { top: 40%; animation-delay: 1s; }
+    .line-3 { top: 60%; animation-delay: 2s; }
+    .line-4 { top: 80%; animation-delay: 3s; }
+    .line-5 { top: 30%; animation-delay: 4s; }
+
+    @keyframes lineScroll {
+        0% { transform: translateX(-200px); }
+        100% { transform: translateX(calc(100vw + 200px)); }
+    }
+
+    .floating-icons {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .floating-icon {
+        position: absolute;
+        font-size: 2rem;
+        color: rgba(59, 130, 246, 0.2);
+        animation: iconFloat 6s ease-in-out infinite;
+    }
+
+    .icon-1 { top: 10%; left: 15%; animation-delay: 0s; }
+    .icon-2 { top: 30%; right: 20%; animation-delay: 1s; }
+    .icon-3 { top: 60%; left: 25%; animation-delay: 2s; }
+    .icon-4 { top: 80%; right: 30%; animation-delay: 3s; }
+    .icon-5 { top: 40%; left: 70%; animation-delay: 4s; }
+    .icon-6 { top: 70%; right: 15%; animation-delay: 5s; }
+
+    @keyframes iconFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-25px) rotate(180deg); }
+    }
+
+    /* Matrix Background */
+    .matrix-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        opacity: 0.05;
+    }
+
+    .matrix-rain {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .matrix-column {
+        position: absolute;
+        width: 2px;
+        height: 200px;
+        background: linear-gradient(transparent, #00ff00, transparent);
+        animation: matrixFall 3s linear infinite;
+    }
+
+    @keyframes matrixFall {
+        0% { transform: translateY(-200px); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(calc(100vh + 200px)); opacity: 0; }
+    }
+
+    .geometric-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .geo-shape {
+        position: absolute;
+        animation: geoFloat 8s ease-in-out infinite;
+    }
+
+    .triangle-1 {
+        top: 20%;
+        left: 10%;
+        width: 0;
+        height: 0;
+        border-left: 25px solid transparent;
+        border-right: 25px solid transparent;
+        border-bottom: 43px solid rgba(59, 130, 246, 0.1);
+        animation-delay: 0s;
+    }
+
+    .circle-1 {
+        top: 60%;
+        right: 20%;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(16, 185, 129, 0.1);
+        animation-delay: 2s;
+    }
+
+    .square-1 {
+        top: 80%;
+        left: 30%;
+        width: 40px;
+        height: 40px;
+        background: rgba(245, 158, 11, 0.1);
+        animation-delay: 4s;
+    }
+
+    .triangle-2 {
+        top: 40%;
+        right: 40%;
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 35px solid rgba(239, 68, 68, 0.1);
+        animation-delay: 1s;
+    }
+
+    .circle-2 {
+        top: 30%;
+        left: 60%;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(168, 85, 247, 0.1);
+        animation-delay: 3s;
+    }
+
+    @keyframes geoFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+        25% { transform: translateY(-15px) rotate(90deg) scale(1.1); }
+        50% { transform: translateY(-30px) rotate(180deg) scale(0.9); }
+        75% { transform: translateY(-15px) rotate(270deg) scale(1.05); }
+    }
+
+    /* Spiral Background */
+    .spiral-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        opacity: 0.08;
+    }
+
+    .spiral {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border: 2px solid #3b82f6;
+        border-radius: 50%;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        animation: spiralSpin 10s linear infinite;
+    }
+
+    .spiral-1 { top: 20%; left: 20%; animation-delay: 0s; }
+    .spiral-2 { top: 60%; right: 30%; animation-delay: 3s; }
+    .spiral-3 { top: 40%; left: 60%; animation-delay: 6s; }
+
+    @keyframes spiralSpin {
+        0% { transform: rotate(0deg) scale(1); }
+        50% { transform: rotate(180deg) scale(1.2); }
+        100% { transform: rotate(360deg) scale(1); }
+    }
+
+    .data-stream {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .stream {
+        position: absolute;
+        width: 1px;
+        height: 100px;
+        background: linear-gradient(transparent, #06b6d4, transparent);
+        animation: streamFlow 4s linear infinite;
+    }
+
+    .stream-1 { left: 25%; animation-delay: 0s; }
+    .stream-2 { left: 50%; animation-delay: 1s; }
+    .stream-3 { left: 75%; animation-delay: 2s; }
+    .stream-4 { left: 90%; animation-delay: 3s; }
+
+    @keyframes streamFlow {
+        0% { transform: translateY(-100px); opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translateY(calc(100vh + 100px)); opacity: 0; }
+    }
+
+    /* Cosmic Background */
+    .cosmic-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .stars-field {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background: white;
+        border-radius: 50%;
+        animation: starTwinkle 3s ease-in-out infinite;
+    }
+
+    .star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+    .star:nth-child(2) { top: 30%; left: 40%; animation-delay: 0.5s; }
+    .star:nth-child(3) { top: 50%; left: 60%; animation-delay: 1s; }
+    .star:nth-child(4) { top: 70%; left: 80%; animation-delay: 1.5s; }
+    .star:nth-child(5) { top: 20%; left: 70%; animation-delay: 2s; }
+    .star:nth-child(6) { top: 60%; left: 30%; animation-delay: 2.5s; }
+    .star:nth-child(7) { top: 80%; left: 50%; animation-delay: 3s; }
+    .star:nth-child(8) { top: 40%; left: 10%; animation-delay: 0.2s; }
+    .star:nth-child(9) { top: 90%; left: 90%; animation-delay: 0.7s; }
+    .star:nth-child(10) { top: 15%; left: 85%; animation-delay: 1.2s; }
+    .star:nth-child(11) { top: 35%; left: 65%; animation-delay: 1.7s; }
+    .star:nth-child(12) { top: 55%; left: 45%; animation-delay: 2.2s; }
+    .star:nth-child(13) { top: 75%; left: 25%; animation-delay: 2.7s; }
+    .star:nth-child(14) { top: 25%; left: 55%; animation-delay: 0.3s; }
+    .star:nth-child(15) { top: 65%; left: 75%; animation-delay: 0.8s; }
+    .star:nth-child(16) { top: 85%; left: 15%; animation-delay: 1.3s; }
+    .star:nth-child(17) { top: 45%; left: 95%; animation-delay: 1.8s; }
+    .star:nth-child(18) { top: 5%; left: 35%; animation-delay: 2.3s; }
+    .star:nth-child(19) { top: 95%; left: 65%; animation-delay: 0.4s; }
+    .star:nth-child(20) { top: 75%; left: 5%; animation-delay: 0.9s; }
+
+    @keyframes starTwinkle {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    .nebula-clouds {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .cloud {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+        animation: cloudDrift 15s ease-in-out infinite;
+    }
+
+    .cloud-1 { 
+        width: 150px; 
+        height: 100px; 
+        top: 20%; 
+        left: 10%; 
+        animation-delay: 0s; 
+    }
+    .cloud-2 { 
+        width: 200px; 
+        height: 120px; 
+        top: 60%; 
+        right: 20%; 
+        animation-delay: 5s; 
+    }
+    .cloud-3 { 
+        width: 120px; 
+        height: 80px; 
+        top: 40%; 
+        left: 60%; 
+        animation-delay: 10s; 
+    }
+
+    @keyframes cloudDrift {
+        0%, 100% { transform: translateX(0px) translateY(0px); }
+        25% { transform: translateX(20px) translateY(-10px); }
+        50% { transform: translateX(-10px) translateY(-20px); }
+        75% { transform: translateX(-20px) translateY(10px); }
+    }
+
+    .energy-beams {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .beam {
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(transparent, rgba(255,255,255,0.5), transparent);
+        animation: beamPulse 4s ease-in-out infinite;
+    }
+
+    .beam-1 { left: 30%; animation-delay: 0s; }
+    .beam-2 { left: 60%; animation-delay: 1.5s; }
+    .beam-3 { left: 80%; animation-delay: 3s; }
+
+    @keyframes beamPulse {
+        0%, 100% { opacity: 0.2; transform: scaleY(1); }
+        50% { opacity: 0.8; transform: scaleY(1.2); }
+    }
+
+    /* Enhanced existing animations */
+    .animate-fade-in-up {
+        opacity: 0;
+        transform: translateY(50px);
+        animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .animation-delay-200 {
+        animation-delay: 0.3s;
+    }
+
+    .animation-delay-400 {
+        animation-delay: 0.6s;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .card-fade-in {
+        opacity: 0;
+        transform: translateY(60px) rotateX(10deg);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-fade-in.animate-in {
+        opacity: 1;
+        transform: translateY(0) rotateX(0deg);
+    }
+
+    .section-fade-in {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 1s ease-out;
+    }
+
+    .section-fade-in.animate-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .card-hover-effect {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        perspective: 1000px;
+    }
+
+    .btn-hover-lift {
+        transition: all 0.4s ease;
+    }
+
+    .btn-hover-lift:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .icon-float {
+        animation: iconFloatEnhanced 4s ease-in-out infinite;
+    }
+
+    @keyframes iconFloatEnhanced {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        25% { transform: translateY(-15px) rotate(5deg); }
+        50% { transform: translateY(-25px) rotate(0deg); }
+        75% { transform: translateY(-10px) rotate(-5deg); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .shape, .particle, .floating-icon {
+            display: none;
+        }
+
+        .card-hover-effect:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .matrix-column, .line, .stream {
+            display: none;
+        }
+    }
+</style>
 {% endblock %}
