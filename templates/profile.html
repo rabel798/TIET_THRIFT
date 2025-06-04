@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile - Tiet Thrift{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1><i class="fas fa-user-edit me-2"></i>Edit Profile</h1>
+            <p class="text-muted">Update your profile information and preferences</p>
+        </div>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body p-4">
+                    <!-- Profile Info -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-user-circle fa-5x text-muted"></i>
+                            </div>
+                            <h5>{{ current_user.username }}</h5>
+                            <p class="text-muted small">{{ current_user.email }}</p>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check-circle me-1"></i>Verified Student
+                            </span>
+                        </div>
+                        
+                        <div class="col-md-9">
+                            <form method="POST" novalidate>
+                                {{ form.hidden_tag() }}
+                                
+                                <!-- Display Name -->
+                                <div class="mb-4">
+                                    {{ form.username.label(class="form-label") }}
+                                    {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else "")) }}
+                                    {% if form.username.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.username.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="form-text">This is how other students will see your name</div>
+                                </div>
+                                
+                                <!-- Bio -->
+                                <div class="mb-4">
+                                    {{ form.bio.label(class="form-label") }}
+                                    {{ form.bio(class="form-control" + (" is-invalid" if form.bio.errors else ""), 
+                                               rows="4", 
+                                               placeholder="Tell other students a bit about yourself...") }}
+                                    {% if form.bio.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.bio.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="form-text">
+                                        <span id="bioCharCount">{{ (form.bio.data or '')|length }}</span>/500 characters
+                                    </div>
+                                </div>
+                                
+                                <!-- Phone Number -->
+                                <div class="mb-4">
+                                    {{ form.phone.label(class="form-label") }}
+                                    <div class="input-group">
+                                        <span class="input-group-text">+91</span>
+                                        {{ form.phone(class="form-control" + (" is-invalid" if form.phone.errors else ""), 
+                                                     placeholder="9876543210") }}
+                                    </div>
+                                    {% if form.phone.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.phone.errors %}{{ error }}{% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    <div class="form-text">
+                                        <i class="fab fa-whatsapp text-success me-1"></i>
+                                        Used for WhatsApp contact (optional but recommended)
+                                    </div>
+                                </div>
+                                
+                                <!-- Account Information -->
+                                <div class="card bg-light mb-4">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-info-circle me-2"></i>Account Information
+                                        </h6>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <strong>Email:</strong><br>
+                                                <span class="text-muted">{{ current_user.email }}</span>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <strong>Member Since:</strong><br>
+                                                <span class="text-muted">{{ current_user.created_at.strftime('%B %Y') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-sm-6">
+                                                <strong>Active Listings:</strong><br>
+                                                <span class="text-muted">{{ current_user.active_listings_count }}</span>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <strong>Account Status:</strong><br>
+                                                <span class="badge bg-success">Active</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Privacy Settings -->
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-shield-alt me-2"></i>Privacy & Safety
+                                        </h6>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="showPhone" checked>
+                                            <label class="form-check-label" for="showPhone">
+                                                Show phone number to interested buyers
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="showEmail" checked>
+                                            <label class="form-check-label" for="showEmail">
+                                                Allow contact via email
+                                            </label>
+                                        </div>
+                                        <small class="text-muted">
+                                            Your email is only visible to verified Thapar students
+                                        </small>
+                                    </div>
+                                </div>
+                                
+                                <!-- Submit Buttons -->
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">
+                                        <i class="fas fa-times me-1"></i>Cancel
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-1"></i>Save Changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Safety Tips -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="fas fa-lightbulb text-warning me-2"></i>Profile Tips
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Do:</h6>
+                            <ul class="small">
+                                <li>Use your real name or a recognizable nickname</li>
+                                <li>Add a brief, friendly bio</li>
+                                <li>Include your phone number for faster communication</li>
+                                <li>Keep your information up to date</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Don't:</h6>
+                            <ul class="small">
+                                <li>Share personal details like room numbers</li>
+                                <li>Use inappropriate language or content</li>
+                                <li>Share someone else's contact information</li>
+                                <li>Include external links or promotions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Quick Actions</h5>
+                    <div class="row g-2">
+                        <div class="col-md-3 col-6">
+                            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="{{ url_for('create_listing') }}" class="btn btn-outline-success w-100">
+                                <i class="fas fa-plus me-1"></i>New Listing
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="{{ url_for('seller_profile', user_id=current_user.id) }}" class="btn btn-outline-info w-100">
+                                <i class="fas fa-eye me-1"></i>View Public Profile
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="{{ url_for('listings') }}" class="btn btn-outline-secondary w-100">
+                                <i class="fas fa-search me-1"></i>Browse Items
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bioTextarea = document.getElementById('bio');
+        const bioCharCount = document.getElementById('bioCharCount');
+        const phoneInput = document.getElementById('phone');
+        
+        // Bio character counter
+        function updateBioCharCount() {
+            const count = bioTextarea.value.length;
+            bioCharCount.textContent = count;
+            
+            if (count > 450) {
+                bioCharCount.className = 'text-warning';
+            } else if (count > 480) {
+                bioCharCount.className = 'text-danger';
+            } else {
+                bioCharCount.className = '';
+            }
+        }
+        
+        bioTextarea.addEventListener('input', updateBioCharCount);
+        
+        // Phone number formatting
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+            
+            // Limit to 10 digits
+            if (value.length > 10) {
+                value = value.substring(0, 10);
+            }
+            
+            e.target.value = value;
+        });
+        
+        // Auto-resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+        
+        bioTextarea.addEventListener('input', function() {
+            autoResize(this);
+        });
+        
+        // Initial resize
+        autoResize(bioTextarea);
+        
+        // Form validation
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            const username = document.getElementById('username').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            
+            if (username.length < 2) {
+                isValid = false;
+                alert('Display name must be at least 2 characters long.');
+            }
+            
+            if (phone && (phone.length !== 10 || !/^\d{10}$/.test(phone))) {
+                isValid = false;
+                alert('Phone number must be exactly 10 digits.');
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Saving...';
+            }
+        });
+        
+        // Add smooth animations
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('fade-in');
+            }, index * 100);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,341 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Tiet Thrift{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h1>
+            <p class="text-muted">Welcome back, {{ current_user.username }}!</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <a href="{{ url_for('create_listing') }}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i>Create New Listing
+            </a>
+        </div>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-list fa-2x text-primary mb-2"></i>
+                    <h3 class="mb-1">{{ active_listings|length }}</h3>
+                    <p class="text-muted mb-0">Active Listings</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-clock fa-2x text-warning mb-2"></i>
+                    <h3 class="mb-1">{{ expired_listings|length }}</h3>
+                    <p class="text-muted mb-0">Expired Listings</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-eye fa-2x text-success mb-2"></i>
+                    <h3 class="mb-1">
+                        {% set total_views = 0 %}
+                        {% for listing in active_listings %}
+                            {% set total_views = total_views + (listing.views or 0) %}
+                        {% endfor %}
+                        {{ total_views }}
+                    </h3>
+                    <p class="text-muted mb-0">Total Views</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h5 class="card-title">Quick Actions</h5>
+                    <div class="row g-2">
+                        <div class="col-md-3 col-6">
+                            <a href="{{ url_for('create_listing') }}" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-plus me-1"></i>New Listing
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="{{ url_for('profile') }}" class="btn btn-outline-secondary w-100">
+                                <i class="fas fa-user-edit me-1"></i>Edit Profile
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="{{ url_for('listings') }}" class="btn btn-outline-info w-100">
+                                <i class="fas fa-search me-1"></i>Browse Items
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a href="{{ url_for('seller_profile', user_id=current_user.id) }}" class="btn btn-outline-success w-100">
+                                <i class="fas fa-storefront me-1"></i>My Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Active Listings -->
+    <div class="row mb-5">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3><i class="fas fa-list text-primary me-2"></i>Active Listings</h3>
+                {% if active_listings %}
+                <small class="text-muted">{{ active_listings|length }} active</small>
+                {% endif %}
+            </div>
+            
+            {% if active_listings %}
+            <div class="row g-4">
+                {% for listing in active_listings %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card listing-card h-100">
+                        {% if listing.images %}
+                            <img src="{{ url_for('static', filename=listing.images[0].replace('static/', '')) }}" 
+                                 class="card-img-top" alt="{{ listing.title }}"
+                                 style="height: 200px; object-fit: cover;"
+                                 onerror="this.parentElement.innerHTML='<div class=\'card-img-top bg-light d-flex align-items-center justify-content-center\' style=\'height: 200px;\'><i class=\'fas fa-image fa-3x text-muted\'></i></div>'">
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="fas fa-image fa-3x text-muted"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">{{ listing.title }}</h5>
+                                <span class="listing-quality quality-{{ listing.quality.lower().replace(' ', '-') }}">
+                                    {{ listing.quality }}
+                                </span>
+                            </div>
+                            
+                            <p class="listing-price mb-2">₹{{ "{:,.0f}".format(listing.price) }}</p>
+                            
+                            <div class="mb-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-tag me-1"></i>{{ listing.category }}
+                                </small>
+                            </div>
+                            
+                            <p class="card-text text-muted small mb-3 flex-grow-1">
+                                {{ listing.description[:100] }}{% if listing.description|length > 100 %}...{% endif %}
+                            </p>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>{{ listing.created_at.strftime('%b %d') }}
+                                    </small>
+                                    <small class="{% if listing.days_remaining <= 7 %}text-warning{% else %}text-muted{% endif %}">
+                                        <i class="fas fa-clock me-1"></i>{{ listing.days_remaining }} days left
+                                    </small>
+                                </div>
+                                
+                                <div class="d-grid gap-1">
+                                    <a href="{{ url_for('listing_detail', listing_id=listing.id) }}" 
+                                       class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-eye me-1"></i>View
+                                    </a>
+                                    <div class="btn-group w-100" role="group">
+                                        <a href="{{ url_for('edit_listing', listing_id=listing.id) }}" 
+                                           class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit me-1"></i>Edit
+                                        </a>
+                                        <button type="button" class="btn btn-danger btn-sm" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#deleteModal{{ listing.id }}">
+                                            <i class="fas fa-trash me-1"></i>Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Delete Modal for each listing -->
+                <div class="modal fade" id="deleteModal{{ listing.id }}" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete Listing</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete "<strong>{{ listing.title }}</strong>"?</p>
+                                <p class="text-muted small">This action cannot be undone.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <form method="POST" action="{{ url_for('delete_listing', listing_id=listing.id) }}" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Delete Listing</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="card text-center p-5">
+                <div class="mb-4">
+                    <i class="fas fa-plus-circle fa-4x text-muted"></i>
+                </div>
+                <h4>No Active Listings</h4>
+                <p class="text-muted mb-4">You haven't created any listings yet. Start selling your items today!</p>
+                <a href="{{ url_for('create_listing') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Create Your First Listing
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Recent Expired Listings -->
+    {% if expired_listings %}
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3><i class="fas fa-clock text-warning me-2"></i>Recently Expired</h3>
+                <small class="text-muted">{{ expired_listings|length }} expired</small>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Expired On</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for listing in expired_listings %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    {% if listing.images %}
+                                    <img src="{{ url_for('static', filename=listing.images[0].replace('static/', '')) }}" 
+                                         class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;"
+                                         onerror="this.style.display='none'">
+                                    {% endif %}
+                                    <div>
+                                        <strong>{{ listing.title }}</strong>
+                                        <br><small class="text-muted">{{ listing.quality }}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>₹{{ "{:,.0f}".format(listing.price) }}</td>
+                            <td>{{ listing.category }}</td>
+                            <td>{{ listing.expires_at.strftime('%b %d, %Y') }}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline-primary btn-sm" 
+                                        onclick="relistItem('{{ listing.title }}', {{ listing.price }}, '{{ listing.category }}', '{{ listing.quality }}', '{{ listing.description|replace("'", "\\'") }}', '{{ listing.tags or "" }}')">
+                                    <i class="fas fa-redo me-1"></i>Relist
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Tips Section -->
+    <div class="row mt-5">
+        <div class="col">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5><i class="fas fa-lightbulb me-2"></i>Tips for Better Sales</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="mb-0">
+                                <li>Use clear, well-lit photos</li>
+                                <li>Write detailed descriptions</li>
+                                <li>Price competitively</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="mb-0">
+                                <li>Respond to inquiries quickly</li>
+                                <li>Be honest about condition</li>
+                                <li>Include relevant tags</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Function to relist expired items
+    function relistItem(title, price, category, quality, description, tags) {
+        // Pre-fill create listing form with expired item data
+        const url = new URL('{{ url_for("create_listing") }}', window.location.origin);
+        url.searchParams.set('title', title);
+        url.searchParams.set('price', price);
+        url.searchParams.set('category', category);
+        url.searchParams.set('quality', quality);
+        url.searchParams.set('description', description);
+        if (tags) url.searchParams.set('tags', tags);
+        
+        window.location.href = url.toString();
+    }
+    
+    // Auto-refresh dashboard data every 5 minutes
+    setTimeout(() => {
+        window.location.reload();
+    }, 300000);
+    
+    // Add fade-in animation for cards
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.listing-card');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('fade-in');
+            }, index * 100);
+        });
+        
+        // Add tooltip for expiring listings
+        const expiringListings = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        expiringListings.forEach(el => {
+            new bootstrap.Tooltip(el);
+        });
+    });
+    
+    // Add warning for listings expiring soon
+    document.addEventListener('DOMContentLoaded', function() {
+        const expiringWarnings = document.querySelectorAll('.text-warning');
+        expiringWarnings.forEach(warning => {
+            if (warning.textContent.includes('days left')) {
+                const days = parseInt(warning.textContent.match(/\d+/)[0]);
+                if (days <= 3) {
+                    warning.closest('.card').classList.add('border-warning');
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

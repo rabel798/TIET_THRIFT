@@ -1,0 +1,351 @@
+{% extends "base.html" %}
+
+{% block title %}{{ seller.username }} - Seller Profile - Tiet Thrift{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Back Button -->
+    <div class="row mb-3">
+        <div class="col">
+            <a href="{{ url_for('listings') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Back to Listings
+            </a>
+        </div>
+    </div>
+    
+    <!-- Seller Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-3 text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-user-circle fa-5x text-primary"></i>
+                            </div>
+                            <h3 class="mb-1">{{ seller.username }}</h3>
+                            <p class="text-muted">
+                                <i class="fas fa-graduation-cap me-1"></i>Thapar Student
+                            </p>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check-circle me-1"></i>Verified
+                            </span>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            {% if seller.bio %}
+                            <h5>About</h5>
+                            <p class="text-muted">{{ seller.bio }}</p>
+                            {% else %}
+                            <div class="text-center text-muted">
+                                <i class="fas fa-user-edit fa-2x mb-2"></i>
+                                <p>This seller hasn't added a bio yet.</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Seller Stats</h5>
+                                    <div class="row">
+                                        <div class="col-12 mb-2">
+                                            <h4 class="text-primary mb-0">{{ listings|length }}</h4>
+                                            <small class="text-muted">Active Listings</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h6 class="text-success mb-0">{{ seller.created_at.strftime('%B %Y') }}</h6>
+                                            <small class="text-muted">Member Since</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Listings Section -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>
+                    <i class="fas fa-store me-2"></i>Items for Sale
+                    {% if listings %}
+                    <span class="badge bg-primary">{{ listings|length }}</span>
+                    {% endif %}
+                </h3>
+                
+                {% if listings|length > 1 %}
+                <div class="btn-group" role="group">
+                    <input type="radio" class="btn-check" name="sortBy" id="sortNewest" checked>
+                    <label class="btn btn-outline-secondary btn-sm" for="sortNewest">
+                        <i class="fas fa-clock me-1"></i>Newest
+                    </label>
+                    
+                    <input type="radio" class="btn-check" name="sortBy" id="sortPrice">
+                    <label class="btn btn-outline-secondary btn-sm" for="sortPrice">
+                        <i class="fas fa-rupee-sign me-1"></i>Price
+                    </label>
+                    
+                    <input type="radio" class="btn-check" name="sortBy" id="sortCategory">
+                    <label class="btn btn-outline-secondary btn-sm" for="sortCategory">
+                        <i class="fas fa-tag me-1"></i>Category
+                    </label>
+                </div>
+                {% endif %}
+            </div>
+            
+            {% if listings %}
+            <div class="row g-4" id="listingsContainer">
+                {% for listing in listings %}
+                <div class="col-lg-4 col-md-6 listing-item" 
+                     data-created="{{ listing.created_at.timestamp() }}"
+                     data-price="{{ listing.price }}"
+                     data-category="{{ listing.category }}">
+                    <div class="card listing-card h-100">
+                        {% if listing.images %}
+                            <img src="{{ url_for('static', filename=listing.images[0].replace('static/', '')) }}" 
+                                 class="card-img-top" alt="{{ listing.title }}"
+                                 style="height: 200px; object-fit: cover;"
+                                 onerror="this.parentElement.innerHTML='<div class=\'card-img-top bg-light d-flex align-items-center justify-content-center\' style=\'height: 200px;\'><i class=\'fas fa-image fa-3x text-muted\'></i></div>'">
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="fas fa-image fa-3x text-muted"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">{{ listing.title }}</h5>
+                                <span class="listing-quality quality-{{ listing.quality.lower().replace(' ', '-') }}">
+                                    {{ listing.quality }}
+                                </span>
+                            </div>
+                            
+                            <p class="listing-price mb-2">₹{{ "{:,.0f}".format(listing.price) }}</p>
+                            
+                            <div class="mb-2">
+                                <small class="text-muted">
+                                    <i class="fas fa-tag me-1"></i>{{ listing.category }}
+                                </small>
+                            </div>
+                            
+                            <p class="card-text text-muted small mb-3 flex-grow-1">
+                                {{ listing.description[:120] }}{% if listing.description|length > 120 %}...{% endif %}
+                            </p>
+                            
+                            {% if listing.tag_list %}
+                            <div class="mb-3">
+                                {% for tag in listing.tag_list[:3] %}
+                                <span class="badge bg-secondary me-1">{{ tag }}</span>
+                                {% endfor %}
+                                {% if listing.tag_list|length > 3 %}
+                                <span class="badge bg-light text-dark">+{{ listing.tag_list|length - 3 }}</span>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <small class="text-muted">
+                                        <i class="fas fa-calendar me-1"></i>{{ listing.created_at.strftime('%b %d') }}
+                                    </small>
+                                    <small class="{% if listing.days_remaining <= 7 %}text-warning{% else %}text-muted{% endif %}">
+                                        <i class="fas fa-clock me-1"></i>{{ listing.days_remaining }} days left
+                                    </small>
+                                </div>
+                                
+                                <div class="d-grid">
+                                    <a href="{{ url_for('listing_detail', listing_id=listing.id) }}" 
+                                       class="btn btn-primary">
+                                        <i class="fas fa-eye me-1"></i>View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <!-- Empty State -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card text-center p-5">
+                        <div class="mb-4">
+                            <i class="fas fa-box-open fa-4x text-muted"></i>
+                        </div>
+                        <h4>No Active Listings</h4>
+                        <p class="text-muted mb-4">
+                            {{ seller.username }} doesn't have any items for sale right now.
+                        </p>
+                        <div>
+                            <a href="{{ url_for('listings') }}" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i>Browse Other Items
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Contact Information -->
+    {% if listings %}
+    <div class="row mt-5">
+        <div class="col">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h5><i class="fas fa-comments me-2"></i>Interested in something?</h5>
+                    <p class="mb-3">Click "View Details" on any listing to contact {{ seller.username }} directly.</p>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-center align-items-center">
+                                {% if seller.phone %}
+                                <div class="me-4">
+                                    <i class="fab fa-whatsapp fa-2x"></i>
+                                    <br><small>WhatsApp Available</small>
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <i class="fas fa-envelope fa-2x"></i>
+                                    <br><small>Email Contact</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Safety Reminder -->
+    <div class="row mt-4">
+        <div class="col">
+            <div class="alert alert-info">
+                <h6><i class="fas fa-shield-alt me-2"></i>Safe Trading Reminder</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="mb-0 small">
+                            <li>Meet in public places on campus</li>
+                            <li>Inspect items before payment</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="mb-0 small">
+                            <li>Trust your instincts</li>
+                            <li>Report suspicious activity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const listingsContainer = document.getElementById('listingsContainer');
+        const sortButtons = document.querySelectorAll('input[name="sortBy"]');
+        
+        // Sorting functionality
+        sortButtons.forEach(button => {
+            button.addEventListener('change', function() {
+                if (this.checked) {
+                    sortListings(this.id);
+                }
+            });
+        });
+        
+        function sortListings(sortType) {
+            const listings = Array.from(listingsContainer.children);
+            
+            listings.sort((a, b) => {
+                switch (sortType) {
+                    case 'sortNewest':
+                        return parseFloat(b.dataset.created) - parseFloat(a.dataset.created);
+                    case 'sortPrice':
+                        return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+                    case 'sortCategory':
+                        return a.dataset.category.localeCompare(b.dataset.category);
+                    default:
+                        return 0;
+                }
+            });
+            
+            // Clear container and re-append sorted listings
+            listingsContainer.innerHTML = '';
+            listings.forEach(listing => {
+                listingsContainer.appendChild(listing);
+            });
+            
+            // Re-apply fade-in animation
+            listings.forEach((listing, index) => {
+                listing.style.opacity = '0';
+                setTimeout(() => {
+                    listing.style.transition = 'opacity 0.3s ease';
+                    listing.style.opacity = '1';
+                }, index * 50);
+            });
+        }
+        
+        // Initial animation for cards
+        const cards = document.querySelectorAll('.listing-card');
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('fade-in');
+            }, index * 100);
+        });
+        
+        // Enhanced image loading
+        const images = document.querySelectorAll('img[src*="static/uploads"]');
+        images.forEach(img => {
+            img.addEventListener('error', function() {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'card-img-top bg-light d-flex align-items-center justify-content-center';
+                placeholder.style.height = '200px';
+                placeholder.innerHTML = '<i class="fas fa-image fa-3x text-muted"></i>';
+                this.parentNode.replaceChild(placeholder, this);
+            });
+        });
+        
+        // Smooth scroll to listings if coming from another page
+        if (window.location.hash === '#listings') {
+            document.querySelector('#listingsContainer').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // Add hover effects for better interactivity
+        const listingCards = document.querySelectorAll('.listing-card');
+        listingCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px)';
+                this.style.transition = 'transform 0.2s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    });
+    
+    // Add analytics for seller profile views (if needed in future)
+    function trackSellerView(sellerId) {
+        // Future implementation for analytics
+        console.log(`Seller profile viewed: ${sellerId}`);
+    }
+    
+    // Track seller profile view
+    trackSellerView({{ seller.id }});
+</script>
+{% endblock %}

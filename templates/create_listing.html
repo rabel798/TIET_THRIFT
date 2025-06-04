@@ -1,0 +1,338 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if edit_mode %}Edit Listing{% else %}Create Listing{% endif %} - Tiet Thrift
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1>
+                <i class="fas fa-{% if edit_mode %}edit{% else %}plus{% endif %} me-2"></i>
+                {% if edit_mode %}Edit Listing{% else %}Create New Listing{% endif %}
+            </h1>
+            <p class="text-muted">
+                {% if edit_mode %}
+                Update your listing details
+                {% else %}
+                Share what you want to sell with fellow students
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body p-4">
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {{ form.hidden_tag() }}
+                        
+                        <!-- Title -->
+                        <div class="mb-4">
+                            {{ form.title.label(class="form-label") }}
+                            {{ form.title(class="form-control" + (" is-invalid" if form.title.errors else "")) }}
+                            {% if form.title.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Be specific and descriptive (e.g., "iPhone 12 Pro 128GB")</div>
+                        </div>
+                        
+                        <!-- Price and Quality Row -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                {{ form.price.label(class="form-label") }}
+                                <div class="input-group">
+                                    <span class="input-group-text">₹</span>
+                                    {{ form.price(class="form-control" + (" is-invalid" if form.price.errors else "")) }}
+                                </div>
+                                {% if form.price.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in form.price.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                {{ form.quality.label(class="form-label") }}
+                                {{ form.quality(class="form-select" + (" is-invalid" if form.quality.errors else "")) }}
+                                {% if form.quality.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.quality.errors %}{{ error }}{% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Category -->
+                        <div class="mb-4">
+                            {{ form.category.label(class="form-label") }}
+                            {{ form.category(class="form-select" + (" is-invalid" if form.category.errors else "")) }}
+                            {% if form.category.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.category.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Description -->
+                        <div class="mb-4">
+                            {{ form.description.label(class="form-label") }}
+                            {{ form.description(class="form-control" + (" is-invalid" if form.description.errors else ""), 
+                                               rows="5", 
+                                               placeholder="Describe the item's condition, features, reason for selling, etc.") }}
+                            {% if form.description.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.description.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                <span id="charCount">0</span>/2000 characters
+                            </div>
+                        </div>
+                        
+                        <!-- Tags -->
+                        <div class="mb-4">
+                            {{ form.tags.label(class="form-label") }}
+                            {{ form.tags(class="form-control" + (" is-invalid" if form.tags.errors else ""), 
+                                        placeholder="e.g., apple, smartphone, unlocked, 128gb") }}
+                            {% if form.tags.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.tags.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Separate tags with commas (maximum 5 tags)</div>
+                        </div>
+                        
+                        <!-- Images -->
+                        <div class="mb-4">
+                            {{ form.images.label(class="form-label") }}
+                            {{ form.images(class="form-control" + (" is-invalid" if form.images.errors else ""), 
+                                          multiple=True, accept="image/*") }}
+                            {% if form.images.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.images.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">
+                                Upload up to 3 clear photos (JPG, PNG, GIF). First image will be the main photo.
+                            </div>
+                            
+                            <!-- Image Preview -->
+                            <div id="imagePreview" class="mt-3 d-none">
+                                <div class="row g-2" id="previewContainer"></div>
+                            </div>
+                            
+                            {% if edit_mode and listing and listing.images %}
+                            <div class="mt-3">
+                                <h6>Current Images:</h6>
+                                <div class="row g-2">
+                                    {% for image in listing.images %}
+                                    <div class="col-md-4">
+                                        <img src="{{ url_for('static', filename=image.replace('static/', '')) }}" 
+                                             class="img-thumbnail" alt="Current image"
+                                             style="height: 100px; object-fit: cover;">
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <small class="text-muted">New images will replace current ones</small>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Important Notice -->
+                        <div class="alert alert-info mb-4">
+                            <h6><i class="fas fa-info-circle me-2"></i>Important Reminders</h6>
+                            <ul class="mb-0 small">
+                                <li>Your listing will automatically expire in 30 days</li>
+                                <li>Only verified Thapar students can contact you</li>
+                                <li>Meet buyers in safe, public places on campus</li>
+                                <li>Be honest about item condition and price</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Submit Buttons -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% if edit_mode and listing %}{{ url_for('listing_detail', listing_id=listing.id) }}{% else %}{{ url_for('dashboard') }}{% endif %}" 
+                               class="btn btn-secondary">
+                                <i class="fas fa-times me-1"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-{% if edit_mode %}save{% else %}plus{% endif %} me-1"></i>
+                                {% if edit_mode %}Update Listing{% else %}Create Listing{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const descriptionTextarea = document.getElementById('description');
+        const charCount = document.getElementById('charCount');
+        const imageInput = document.getElementById('images');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewContainer = document.getElementById('previewContainer');
+        
+        // Character counter for description
+        function updateCharCount() {
+            const count = descriptionTextarea.value.length;
+            charCount.textContent = count;
+            
+            if (count > 1800) {
+                charCount.className = 'text-warning';
+            } else if (count > 1950) {
+                charCount.className = 'text-danger';
+            } else {
+                charCount.className = '';
+            }
+        }
+        
+        descriptionTextarea.addEventListener('input', updateCharCount);
+        updateCharCount(); // Initial count
+        
+        // Image preview
+        imageInput.addEventListener('change', function(e) {
+            previewContainer.innerHTML = '';
+            const files = Array.from(e.target.files);
+            
+            if (files.length === 0) {
+                imagePreview.classList.add('d-none');
+                return;
+            }
+            
+            if (files.length > 3) {
+                alert('Maximum 3 images allowed. Only the first 3 will be used.');
+            }
+            
+            files.slice(0, 3).forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-4';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-thumbnail';
+                        img.style.height = '100px';
+                        img.style.objectFit = 'cover';
+                        img.alt = `Preview ${index + 1}`;
+                        
+                        const badge = document.createElement('div');
+                        badge.className = 'position-relative';
+                        badge.appendChild(img);
+                        
+                        if (index === 0) {
+                            const mainBadge = document.createElement('span');
+                            mainBadge.className = 'position-absolute top-0 start-0 badge bg-primary';
+                            mainBadge.textContent = 'Main';
+                            badge.appendChild(mainBadge);
+                        }
+                        
+                        col.appendChild(badge);
+                        previewContainer.appendChild(col);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            imagePreview.classList.remove('d-none');
+        });
+        
+        // Form validation enhancements
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Additional client-side validation
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const price = parseFloat(document.getElementById('price').value);
+            const tags = document.getElementById('tags').value.trim();
+            
+            if (title.length < 5) {
+                isValid = false;
+                alert('Title must be at least 5 characters long.');
+            }
+            
+            if (description.length < 10) {
+                isValid = false;
+                alert('Description must be at least 10 characters long.');
+            }
+            
+            if (isNaN(price) || price <= 0) {
+                isValid = false;
+                alert('Please enter a valid price.');
+            }
+            
+            if (tags && tags.split(',').length > 5) {
+                isValid = false;
+                alert('Maximum 5 tags allowed.');
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>{% if edit_mode %}Updating...{% else %}Creating...{% endif %}';
+            }
+        });
+        
+        // Auto-resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+        
+        descriptionTextarea.addEventListener('input', function() {
+            autoResize(this);
+        });
+        
+        // Initial resize
+        autoResize(descriptionTextarea);
+        
+        // Tag suggestions (simple implementation)
+        const tagInput = document.getElementById('tags');
+        const commonTags = [
+            'like new', 'barely used', 'excellent condition', 'good condition',
+            'electronics', 'textbook', 'novel', 'smartphone', 'laptop',
+            'furniture', 'study table', 'chair', 'lamp', 'clothing',
+            'sports', 'fitness', 'kitchen', 'appliance', 'decor'
+        ];
+        
+        tagInput.addEventListener('input', function() {
+            // This could be enhanced with a proper autocomplete dropdown
+            const value = this.value.toLowerCase();
+            const lastTag = value.split(',').pop().trim();
+            
+            if (lastTag.length > 2) {
+                const suggestions = commonTags.filter(tag => 
+                    tag.includes(lastTag) && !value.includes(tag)
+                );
+                
+                if (suggestions.length > 0) {
+                    // Simple suggestion in placeholder for now
+                    this.placeholder = `Try: ${suggestions[0]}`;
+                } else {
+                    this.placeholder = 'e.g., apple, smartphone, unlocked, 128gb';
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
