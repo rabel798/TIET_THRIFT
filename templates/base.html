@@ -739,6 +739,25 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Google OAuth Popup Handler
+        function openGoogleAuth() {
+            const authUrl = "{{ url_for('google_auth.login') }}";
+            const popup = window.open(
+                authUrl, 
+                'google-auth', 
+                'width=500,height=600,scrollbars=yes,resizable=yes'
+            );
+            
+            // Check if popup is closed and refresh the parent window
+            const checkClosed = setInterval(() => {
+                if (popup.closed) {
+                    clearInterval(checkClosed);
+                    // Refresh the page to update login status
+                    window.location.reload();
+                }
+            }, 1000);
+        }
     </script>
 
     {% block scripts %}{% endblock %}
