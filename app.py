@@ -189,7 +189,11 @@ def create_listing():
         listing.user_id = current_user.id
         listing.created_at = datetime.utcnow()
         # Convert date to datetime for storage
-        listing.expires_at = datetime.combine(form.expires_at.data, datetime.max.time())
+        expiry_date = form.expires_at.data
+        if expiry_date:
+            listing.expires_at = datetime.combine(expiry_date, datetime.max.time())
+        else:
+            listing.expires_at = datetime.utcnow() + timedelta(days=30)
         
         db.session.add(listing)
         db.session.commit()
@@ -282,6 +286,10 @@ def edit_listing(listing_id):
     
     form = ListingForm(obj=listing)
     
+    # Set the form's expires_at field to the listing's expiry date
+    if request.method == 'GET':
+        form.expires_at.data = listing.expires_at.date() if listing.expires_at else None
+    
     if form.validate_on_submit():
         listing.title = form.title.data
         listing.description = form.description.data
@@ -289,6 +297,13 @@ def edit_listing(listing_id):
         listing.quality = form.quality.data
         listing.category = form.category.data
         listing.tags = form.tags.data
+        
+        # Update expiry date
+        expiry_date = form.expires_at.data
+        if expiry_date:
+            listing.expires_at = datetime.combine(expiry_date, datetime.max.time())
+        else:
+            listing.expires_at = datetime.utcnow() + timedelta(days=30)
         
         # Handle new images if uploaded
         if form.images.data and any(img.filename for img in form.images.data):

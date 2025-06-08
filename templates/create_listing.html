@@ -144,11 +144,23 @@
                             {% endif %}
                         </div>
                         
+                        <!-- Expiry Date -->
+                        <div class="mb-4">
+                            {{ form.expires_at.label(class="form-label") }}
+                            {{ form.expires_at(class="form-control" + (" is-invalid" if form.expires_at.errors else "")) }}
+                            {% if form.expires_at.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.expires_at.errors %}{{ error }}{% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Choose when your listing should expire (maximum 1 year from now)</div>
+                        </div>
+                        
                         <!-- Important Notice -->
                         <div class="alert alert-info mb-4">
                             <h6><i class="fas fa-info-circle me-2"></i>Important Reminders</h6>
                             <ul class="mb-0 small">
-                                <li>Your listing will automatically expire in 30 days</li>
+                                <li>You can set a custom expiry date for your listing</li>
                                 <li>Only verified Thapar students can contact you</li>
                                 <li>Meet buyers in safe, public places on campus</li>
                                 <li>Be honest about item condition and price</li>
