@@ -121,7 +121,7 @@
                         </a>
                         {% endif %}
                         
-                        <a href="mailto:{{ listing.user.email }}?subject=Interested in {{ listing.title }}&body={{ listing.whatsapp_message|urlencode }}" 
+                        <a href="mailto:{{ listing.user.email }}?subject=Interested%20in%20{{ listing.title|replace(' ', '%20') }}&body=Hi!%20I'm%20interested%20in%20your%20listing:%20{{ listing.title|replace(' ', '%20') }}%0D%0APrice:%20₹{{ listing.price }}%0D%0AQuality:%20{{ listing.quality|replace(' ', '%20') }}%0D%0A%0D%0ACould%20you%20please%20share%20more%20details?" 
                            class="btn btn-outline-primary btn-lg">
                             <i class="fas fa-envelope me-2"></i>Send Email
                         </a>

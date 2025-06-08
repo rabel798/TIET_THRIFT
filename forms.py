@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, MultipleFileField
-from wtforms import StringField, TextAreaField, FloatField, SelectField, validators
-from wtforms.validators import DataRequired, Length, NumberRange, Optional
+from wtforms import StringField, TextAreaField, FloatField, SelectField, DateField, validators
+from wtforms.validators import DataRequired, Length, NumberRange, Optional, ValidationError
+from datetime import datetime, timedelta
 
 class ListingForm(FlaskForm):
     title = StringField('Title', validators=[
@@ -47,6 +48,19 @@ class ListingForm(FlaskForm):
         FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Only JPG, JPEG, PNG, and GIF files are allowed'),
         Optional()
     ])
+    
+    expires_at = DateField('Listing Expires On', validators=[
+        DataRequired(message='Please select an expiry date')
+    ], default=lambda: (datetime.utcnow() + timedelta(days=30)).date())
+    
+    def validate_expires_at(self, field):
+        if field.data:
+            # Convert date to datetime for comparison
+            expiry_datetime = datetime.combine(field.data, datetime.min.time())
+            if expiry_datetime <= datetime.utcnow():
+                raise ValidationError('Expiry date must be in the future')
+            if expiry_datetime > datetime.utcnow() + timedelta(days=365):
+                raise ValidationError('Expiry date cannot be more than 1 year from now')
     
     def validate_tags(self, field):
         if field.data:

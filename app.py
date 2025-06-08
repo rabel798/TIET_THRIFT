@@ -188,7 +188,8 @@ def create_listing():
         listing.image_urls = ','.join(image_urls) if image_urls else ''
         listing.user_id = current_user.id
         listing.created_at = datetime.utcnow()
-        listing.expires_at = datetime.utcnow() + timedelta(days=30)
+        # Convert date to datetime for storage
+        listing.expires_at = datetime.combine(form.expires_at.data, datetime.max.time())
         
         db.session.add(listing)
         db.session.commit()
