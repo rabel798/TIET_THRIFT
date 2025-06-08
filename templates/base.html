@@ -764,12 +764,20 @@
             });
         });
 
-        // Add ripple effect styles
+        // Add enhanced micro-interaction styles
         const style = document.createElement('style');
         style.textContent = `
             .btn {
                 position: relative;
                 overflow: hidden;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+            .btn:hover {
+                transform: translateY(-2px) !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+            }
+            .btn:active {
+                transform: translateY(0) scale(0.98) !important;
             }
             .ripple {
                 position: absolute;
@@ -783,6 +791,36 @@
                 to {
                     transform: scale(4);
                     opacity: 0;
+                }
+            }
+            .form-control, .form-select {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+            .form-control:hover, .form-select:hover {
+                border-color: rgba(59, 130, 246, 0.5) !important;
+                transform: translateY(-1px) !important;
+            }
+            .form-control.has-content, .form-select.has-content {
+                border-color: #10b981 !important;
+            }
+            .card {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            }
+            .card:hover {
+                transform: translateY(-5px) scale(1.02) !important;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+            }
+            .fade-in {
+                animation: fadeInUp 0.6s ease-out !important;
+            }
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
                 }
             }
         `;
