@@ -553,9 +553,9 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-primary" href="{{ url_for('google_auth.login') }}">
+                        <button class="btn btn-primary" onclick="openGoogleAuth()">
                             <i class="fab fa-google me-1"></i>Login with Google
-                        </a>
+                        </button>
                     </li>
                     {% endif %}
                 </ul>

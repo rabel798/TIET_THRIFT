@@ -48,6 +48,8 @@ def login():
             authorization_endpoint,
             redirect_uri=redirect_uri,
             scope=["openid", "email", "profile"],
+            # Add additional parameters to bypass iframe restrictions
+            hd="thapar.edu"  # Restrict to thapar.edu domain
         )
         return redirect(request_uri)
     except Exception as e:
