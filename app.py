@@ -107,16 +107,23 @@ def listings():
     listings = query.order_by(Listing.created_at.desc()).all()
     
     # Get available categories and qualities for filters
-    categories = db.session.query(Listing.category).filter(
+    categories_from_db = db.session.query(Listing.category).filter(
         Listing.expires_at > datetime.utcnow()
     ).distinct().all()
-    categories = [cat[0] for cat in categories if cat[0]]
+    categories_from_db = [cat[0] for cat in categories_from_db if cat[0]]
+    
+    # Default categories from forms.py to ensure dropdown always has options
+    default_categories = ['Books', 'Electronics', 'Furniture', 'Clothing', 'Sports', 'Kitchen', 'Stationery', 'Decor', 'Other']
+    
+    # Combine and deduplicate categories
+    all_categories = list(set(categories_from_db + default_categories))
+    all_categories.sort()
     
     qualities = ['Like New', 'Good', 'Fair', 'Poor']
     
     return render_template('listings.html', 
                          listings=listings, 
-                         categories=categories,
+                         categories=all_categories,
                          qualities=qualities,
                          current_category=category,
                          current_quality=quality,

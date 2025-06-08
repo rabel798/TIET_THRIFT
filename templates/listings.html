@@ -27,8 +27,19 @@
                     <label for="category" class="form-label">Category</label>
                     <select class="form-select" id="category" name="category">
                         <option value="">All Categories</option>
+                        <option value="Books" {% if current_category == 'Books' %}selected{% endif %}>Books</option>
+                        <option value="Electronics" {% if current_category == 'Electronics' %}selected{% endif %}>Electronics</option>
+                        <option value="Furniture" {% if current_category == 'Furniture' %}selected{% endif %}>Furniture</option>
+                        <option value="Clothing" {% if current_category == 'Clothing' %}selected{% endif %}>Clothing</option>
+                        <option value="Sports" {% if current_category == 'Sports' %}selected{% endif %}>Sports & Fitness</option>
+                        <option value="Kitchen" {% if current_category == 'Kitchen' %}selected{% endif %}>Kitchen & Dining</option>
+                        <option value="Stationery" {% if current_category == 'Stationery' %}selected{% endif %}>Stationery</option>
+                        <option value="Decor" {% if current_category == 'Decor' %}selected{% endif %}>Home Decor</option>
+                        <option value="Other" {% if current_category == 'Other' %}selected{% endif %}>Other</option>
                         {% for cat in categories %}
+                        {% if cat not in ['Books', 'Electronics', 'Furniture', 'Clothing', 'Sports', 'Kitchen', 'Stationery', 'Decor', 'Other'] %}
                         <option value="{{ cat }}" {% if cat == current_category %}selected{% endif %}>{{ cat }}</option>
+                        {% endif %}
                         {% endfor %}
                     </select>
                 </div>

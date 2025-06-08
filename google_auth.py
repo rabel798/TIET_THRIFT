@@ -17,6 +17,9 @@ GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configura
 # Make sure to use this redirect URL. It has to match the one in the whitelist
 DEV_REDIRECT_URL = f'https://{os.environ.get("REPLIT_DEV_DOMAIN", "localhost:5000")}/google_login/callback'
 
+# Get the current domain from environment
+CURRENT_DOMAIN = os.environ.get("REPLIT_DEV_DOMAIN", "localhost:5000")
+
 # ALWAYS display setup instructions to the user:
 print(f"""To make Google authentication work:
 1. Go to https://console.cloud.google.com/apis/credentials
@@ -38,11 +41,12 @@ def login():
         google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
         authorization_endpoint = google_provider_cfg["authorization_endpoint"]
 
+        # Use the exact redirect URI that should be registered in Google Console
+        redirect_uri = f"https://{CURRENT_DOMAIN}/google_login/callback"
+        
         request_uri = client.prepare_request_uri(
             authorization_endpoint,
-            # Replacing http:// with https:// is important as the external
-            # protocol must be https to match the URI whitelisted
-            redirect_uri=request.base_url.replace("http://", "https://") + "/callback",
+            redirect_uri=redirect_uri,
             scope=["openid", "email", "profile"],
         )
         return redirect(request_uri)
@@ -58,12 +62,13 @@ def callback():
         google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
         token_endpoint = google_provider_cfg["token_endpoint"]
 
+        # Use the exact same redirect URI as in the login function
+        redirect_uri = f"https://{CURRENT_DOMAIN}/google_login/callback"
+        
         token_url, headers, body = client.prepare_token_request(
             token_endpoint,
-            # Replacing http:// with https:// is important as the external
-            # protocol must be https to match the URI whitelisted
             authorization_response=request.url.replace("http://", "https://"),
-            redirect_url=request.base_url.replace("http://", "https://"),
+            redirect_url=redirect_uri,
             code=code,
         )
         token_response = requests.post(
