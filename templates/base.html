@@ -9,8 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Neue Montreal Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Neue+Montreal:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -44,182 +44,75 @@
         }
 
         body {
-            font-family: 'Neue Montreal', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--background);
             color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Crazy Global Background Animation */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
-            animation: backgroundShift 20s ease-in-out infinite;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        @keyframes backgroundShift {
-            0%, 100% { 
-                background: 
-                    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
-            }
-            33% { 
-                background: 
-                    radial-gradient(circle at 70% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 30% 70%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 60% 60%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
-            }
-            66% { 
-                background: 
-                    radial-gradient(circle at 50% 90%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 90% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 10% 10%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
-            }
-        }
-
-        /* Global Floating Elements */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.8) 1px, transparent 1px),
-                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.6) 1px, transparent 1px),
-                radial-gradient(circle at 40% 40%, rgba(255,255,255,0.4) 1px, transparent 1px);
-            background-size: 100px 100px, 150px 150px, 200px 200px;
-            animation: floatingDots 25s linear infinite;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.3;
-        }
-
-        @keyframes floatingDots {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-100px, -100px); }
-        }
-
-        /* Enhanced Navbar Styles with Crazy Effects */
+        /* Enhanced Navbar Styles */
         .navbar {
             background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
-            box-shadow: var(--shadow), 0 0 20px rgba(59, 130, 246, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
             position: sticky;
             top: 0;
             z-index: 1000;
-            overflow: hidden;
-        }
-
-        .navbar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-            animation: navbarShimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes navbarShimmer {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
         }
 
         .navbar.scrolled {
             background: rgba(255, 255, 255, 0.98) !important;
-            box-shadow: var(--shadow-lg), 0 0 30px rgba(59, 130, 246, 0.15);
-            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .navbar-brand {
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
             color: var(--primary-color) !important;
             font-size: 1.75rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            z-index: 2;
+            transition: all 0.3s ease;
         }
 
         .navbar-brand:hover {
-            transform: scale(1.1) rotate(2deg);
-            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            transform: scale(1.05);
         }
 
         .navbar-brand i {
-            animation: brandIconSpin 8s linear infinite;
-            display: inline-block;
+            animation: rotate 4s linear infinite;
         }
 
-        @keyframes brandIconSpin {
-            0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(90deg) scale(1.1); }
-            50% { transform: rotate(180deg) scale(1); }
-            75% { transform: rotate(270deg) scale(1.1); }
-            100% { transform: rotate(360deg) scale(1); }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .nav-link {
             color: var(--text) !important;
-            font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            transition: all 0.3s ease;
             position: relative;
-            padding: 0.75rem 1.25rem !important;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .nav-link:hover::before {
-            left: 100%;
+            padding: 0.5rem 1rem !important;
+            border-radius: 8px;
         }
 
         .nav-link:hover {
             color: var(--primary-color) !important;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
         }
 
         .nav-link::after {
             content: '';
             position: absolute;
             width: 0;
-            height: 3px;
+            height: 2px;
             bottom: 0;
             left: 50%;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 2px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
         }
 
         .nav-link:hover::after {
@@ -227,17 +120,14 @@
             left: 10%;
         }
 
-        /* Enhanced Button Styles with Crazy Effects */
+        /* Enhanced Button Styles */
         .btn {
-            border-radius: 16px;
-            font-weight: 700;
-            font-family: 'Neue Montreal', sans-serif !important;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             position: relative;
             overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .btn::before {
@@ -247,147 +137,102 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.6s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
 
         .btn:hover::before {
             left: 100%;
         }
 
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.6s ease;
-        }
-
-        .btn:active::after {
-            width: 300px;
-            height: 300px;
-        }
-
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, #1e40af 100%);
+            background: var(--gradient-primary);
             color: white;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e40af 50%, #1e3a8a 100%);
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
         }
 
         .btn-outline-primary {
-            border: 3px solid var(--primary-color);
+            border: 2px solid var(--primary-color);
             color: var(--primary-color);
             background: transparent;
-            position: relative;
-        }
-
-        .btn-outline-primary::before {
-            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
         }
 
         .btn-outline-primary:hover {
             background: var(--primary-color);
             color: white;
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
-            border-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-success {
             background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
 
         .btn-warning {
             background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
         }
 
         .btn-danger {
             background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
         }
 
-        /* Enhanced Card Styles with Crazy Effects */
+        /* Enhanced Card Styles */
         .card {
             border: 1px solid var(--border);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: var(--shadow);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
             background: var(--gradient-surface);
-            position: relative;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-
-        .card:hover::before {
-            transform: translateX(100%);
         }
 
         .card:hover {
-            transform: translateY(-12px) rotateX(5deg) rotateY(2deg);
-            box-shadow: var(--shadow-xl), 0 0 40px rgba(59, 130, 246, 0.2);
-            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(59, 130, 246, 0.2);
         }
 
         .card-img-top {
             height: 220px;
             object-fit: cover;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s ease;
         }
 
         .card:hover .card-img-top {
-            transform: scale(1.1) rotate(2deg);
+            transform: scale(1.08);
         }
 
         /* Enhanced Form Styles */
         .form-control, .form-select {
             border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 1rem 1.25rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px;
+            padding: 0.875rem 1rem;
+            transition: all 0.3s ease;
             background-color: var(--surface);
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 500;
         }
 
         .form-control:focus, .form-select:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.15), 0 0 20px rgba(59, 130, 246, 0.1);
-            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
         }
 
         /* Enhanced Alert Styles */
         .alert {
-            border-radius: 16px;
+            border-radius: 12px;
             border: none;
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 500;
         }
 
         .alert::before {
@@ -398,22 +243,6 @@
             width: 4px;
             height: 100%;
             background: currentColor;
-        }
-
-        .alert::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, currentColor, transparent);
-            animation: alertGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes alertGlow {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
         }
 
         .alert-success {
@@ -440,7 +269,7 @@
         .hero-section {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, #1e40af 100%);
             color: white;
-            padding: 6rem 0;
+            padding: 5rem 0;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -453,92 +282,76 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
-                radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
-            animation: heroShimmer 8s ease-in-out infinite;
-        }
-
-        @keyframes heroShimmer {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
         }
 
         .hero-title {
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-size: 4rem;
-            font-weight: 900;
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
             margin-bottom: 1.5rem;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c7d2fe 100%);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: titleGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes titleGlow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
-            50% { filter: drop-shadow(0 0 20px rgba(255,255,255,0.6)); }
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
+            font-size: 1.375rem;
             opacity: 0.95;
             margin-bottom: 2.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         /* Listing Card Enhancements */
         .listing-card {
             position: relative;
             overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
         }
 
         .listing-price {
-            font-size: 1.75rem;
-            font-weight: 900;
+            font-size: 1.5rem;
+            font-weight: 800;
             color: var(--primary-color);
-            text-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
-            font-family: 'Neue Montreal', sans-serif !important;
+            text-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
         }
 
         .listing-quality {
             display: inline-block;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
             font-size: 0.75rem;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             box-shadow: var(--shadow);
-            font-family: 'Neue Montreal', sans-serif !important;
         }
 
         .quality-like-new {
             background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
             color: #065f46;
-            border: 2px solid #a7f3d0;
+            border: 1px solid #a7f3d0;
         }
 
         .quality-good {
             background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
             color: #1e40af;
-            border: 2px solid #93c5fd;
+            border: 1px solid #93c5fd;
         }
 
         .quality-fair {
             background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
             color: #92400e;
-            border: 2px solid #fcd34d;
+            border: 1px solid #fcd34d;
         }
 
         .quality-poor {
             background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
             color: #991b1b;
-            border: 2px solid #fca5a5;
+            border: 1px solid #fca5a5;
         }
 
         /* WhatsApp Button */
@@ -546,25 +359,24 @@
             background: linear-gradient(135deg, #25D366 0%, #1DA851 100%);
             color: white;
             border: none;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
         .whatsapp-btn:hover {
             background: linear-gradient(135deg, #1DA851 0%, #128C7E 100%);
             color: white;
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
         }
 
         /* Footer Enhancements */
         .footer {
             background: linear-gradient(135deg, var(--text) 0%, #0f172a 100%);
             color: white;
-            padding: 4rem 0;
+            padding: 3rem 0;
             margin-top: 4rem;
             position: relative;
-            overflow: hidden;
         }
 
         .footer::before {
@@ -573,50 +385,18 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        }
-
-        .footer::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-            pointer-events: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         /* Search Filters */
         .search-filters {
             background: var(--gradient-surface);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2.5rem;
+            border-radius: 16px;
+            padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .search-filters::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
-            animation: filterShimmer 4s ease-in-out infinite;
-        }
-
-        @keyframes filterShimmer {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
         }
 
         /* Loading States */
@@ -631,27 +411,27 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 30px;
-            height: 30px;
-            margin: -15px 0 0 -15px;
-            border: 3px solid var(--primary-color);
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid var(--primary-color);
             border-radius: 50%;
             border-top-color: transparent;
-            animation: loadingSpin 1s linear infinite;
+            animation: spin 1s linear infinite;
         }
 
-        @keyframes loadingSpin {
+        @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 2.75rem;
+                font-size: 2.5rem;
             }
 
             .hero-subtitle {
-                font-size: 1.25rem;
+                font-size: 1.125rem;
             }
 
             .card-img-top {
@@ -661,112 +441,61 @@
             .navbar-brand {
                 font-size: 1.5rem;
             }
-
-            .btn {
-                font-size: 0.9rem;
-                padding: 0.75rem 1.5rem;
-            }
         }
 
         /* Smooth Animations */
         .fade-in {
-            animation: fadeInEnhanced 1s ease-in-out;
+            animation: fadeIn 0.8s ease-in-out;
         }
 
-        @keyframes fadeInEnhanced {
+        @keyframes fadeIn {
             from { 
                 opacity: 0; 
-                transform: translateY(30px) scale(0.95); 
+                transform: translateY(20px); 
             }
             to { 
                 opacity: 1; 
-                transform: translateY(0) scale(1); 
+                transform: translateY(0); 
             }
         }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 12px;
+            width: 8px;
         }
 
         ::-webkit-scrollbar-track {
             background: var(--background-alt);
-            border-radius: 6px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 6px;
-            border: 2px solid var(--background-alt);
+            background: var(--primary-color);
+            border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            background: var(--primary-dark);
         }
 
         /* Dropdown Enhancements */
         .dropdown-menu {
             border: none;
             box-shadow: var(--shadow-lg);
-            border-radius: 16px;
-            padding: 1rem;
+            border-radius: 12px;
+            padding: 0.5rem;
             background: var(--gradient-surface);
-            backdrop-filter: blur(20px);
         }
 
         .dropdown-item {
-            border-radius: 12px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 0.75rem 1.25rem;
-            font-weight: 500;
-            font-family: 'Neue Montreal', sans-serif !important;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            padding: 0.5rem 1rem;
         }
 
         .dropdown-item:hover {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05));
+            background-color: rgba(59, 130, 246, 0.1);
             color: var(--primary-color);
-            transform: translateX(8px) scale(1.02);
-        }
-
-        /* Section Titles Enhancement */
-        .section-title {
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 800;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--text) 0%, var(--primary-color) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 500;
-            font-size: 1.125rem;
-        }
-
-        .card-title-enhanced {
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 700;
-            font-size: 1.25rem;
-        }
-
-        .safety-title {
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 800;
-            font-size: 2rem;
-        }
-
-        .cta-title {
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 800;
-            font-size: 2.5rem;
-        }
-
-        .cta-subtitle {
-            font-family: 'Neue Montreal', sans-serif !important;
-            font-weight: 500;
-            font-size: 1.25rem;
+            transform: translateX(4px);
         }
     </style>
 </head>
@@ -856,7 +585,7 @@
 
     <!-- Enhanced Footer -->
     <footer class="footer">
-        <div class="container position-relative">
+        <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <h5 class="mb-3">
@@ -895,9 +624,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Enhanced JavaScript functionality with crazy effects
+        // Enhanced JavaScript functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Navbar scroll effect with enhanced animations
+            // Navbar scroll effect
             const navbar = document.getElementById('mainNavbar');
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 50) {
@@ -915,9 +644,10 @@
                     if (submitBtn) {
                         submitBtn.disabled = true;
                         const originalText = submitBtn.innerHTML;
-                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Processing...';
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Please wait...';
                         form.classList.add('loading');
 
+                        // Reset after 10 seconds as fallback
                         setTimeout(() => {
                             submitBtn.disabled = false;
                             submitBtn.innerHTML = originalText;
@@ -933,16 +663,16 @@
                 setTimeout(() => {
                     const bsAlert = new bootstrap.Alert(alert);
                     bsAlert.close();
-                }, 7000);
+                }, 6000);
             });
 
-            // Enhanced smooth scrolling
+            // Smooth scrolling enhancement
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
                     if (target) {
-                        const offsetTop = target.offsetTop - 100;
+                        const offsetTop = target.offsetTop - 80; // Account for navbar
                         window.scrollTo({
                             top: offsetTop,
                             behavior: 'smooth'
@@ -951,7 +681,7 @@
                 });
             });
 
-            // Enhanced entrance animations
+            // Add entrance animations to elements
             const observeElements = document.querySelectorAll('.card, .alert, .btn');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -963,7 +693,7 @@
 
             observeElements.forEach(el => observer.observe(el));
 
-            // Enhanced button click effects with ripple
+            // Enhanced button click effects
             document.querySelectorAll('.btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     const ripple = document.createElement('span');
@@ -981,79 +711,26 @@
 
                     setTimeout(() => {
                         ripple.remove();
-                    }, 800);
-                });
-            });
-
-            // Crazy mouse trail effect
-            const trail = [];
-            const trailLength = 20;
-
-            document.addEventListener('mousemove', function(e) {
-                trail.push({ x: e.clientX, y: e.clientY, time: Date.now() });
-
-                if (trail.length > trailLength) {
-                    trail.shift();
-                }
-
-                // Create trail particles
-                if (Math.random() > 0.8) {
-                    const particle = document.createElement('div');
-                    particle.style.position = 'fixed';
-                    particle.style.left = e.clientX + 'px';
-                    particle.style.top = e.clientY + 'px';
-                    particle.style.width = '4px';
-                    particle.style.height = '4px';
-                    particle.style.background = 'rgba(59, 130, 246, 0.6)';
-                    particle.style.borderRadius = '50%';
-                    particle.style.pointerEvents = 'none';
-                    particle.style.zIndex = '9999';
-                    particle.style.animation = 'trailFade 1s ease-out forwards';
-
-                    document.body.appendChild(particle);
-
-                    setTimeout(() => {
-                        particle.remove();
-                    }, 1000);
-                }
-            });
-
-            // Parallax effect for various elements
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const parallaxElements = document.querySelectorAll('.card, .alert');
-
-                parallaxElements.forEach((element, index) => {
-                    const speed = 0.1 + (index % 3) * 0.05;
-                    const yPos = -(scrolled * speed);
-                    element.style.transform = `translateY(${yPos}px)`;
+                    }, 600);
                 });
             });
         });
 
-        // Add trail fade animation
-        const trailStyle = document.createElement('style');
-        trailStyle.textContent = `
-            @keyframes trailFade {
-                0% { 
-                    opacity: 1; 
-                    transform: scale(1); 
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: scale(0.5) translateY(-20px); 
-                }
+        // Add ripple effect styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .btn {
+                position: relative;
+                overflow: hidden;
             }
-
             .ripple {
                 position: absolute;
                 border-radius: 50%;
-                background: rgba(255, 255, 255, 0.7);
+                background: rgba(255, 255, 255, 0.6);
                 transform: scale(0);
-                animation: ripple-animation 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+                animation: ripple-animation 0.6s linear;
                 pointer-events: none;
             }
-
             @keyframes ripple-animation {
                 to {
                     transform: scale(4);
@@ -1061,9 +738,10 @@
                 }
             }
         `;
-        document.head.appendChild(trailStyle);
+        document.head.appendChild(style);
     </script>
 
     {% block scripts %}{% endblock %}
 </body>
 </html>
+
