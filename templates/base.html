@@ -693,7 +693,7 @@
 
             observeElements.forEach(el => observer.observe(el));
 
-            // Enhanced button click effects
+            // Enhanced button click effects and micro-interactions
             document.querySelectorAll('.btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     const ripple = document.createElement('span');
@@ -712,6 +712,54 @@
                     setTimeout(() => {
                         ripple.remove();
                     }, 600);
+                });
+
+                // Button hover micro-interactions
+                btn.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.3)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '';
+                });
+            });
+
+            // Form input micro-interactions
+            document.querySelectorAll('input, textarea, select').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = 'var(--primary-color)';
+                    this.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+                    this.style.transform = 'scale(1.02)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = '';
+                    this.style.boxShadow = '';
+                    this.style.transform = 'scale(1)';
+                });
+
+                input.addEventListener('input', function() {
+                    if (this.value.length > 0) {
+                        this.classList.add('has-content');
+                    } else {
+                        this.classList.remove('has-content');
+                    }
+                });
+            });
+
+            // Card hover effects
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
                 });
             });
         });

@@ -38,6 +38,14 @@ login_manager.init_app(app)
 login_manager.login_view = 'google_auth.login'
 login_manager.login_message = 'Please log in with your Thapar email to access this page.'
 
+# Add custom Jinja2 filters
+@app.template_filter('nl2br')
+def nl2br_filter(text):
+    """Convert newlines to HTML br tags"""
+    if text is None:
+        return ''
+    return text.replace('\n', '<br>\n')
+
 @login_manager.user_loader
 def load_user(user_id):
     from models import User
@@ -170,18 +178,17 @@ def create_listing():
         image_urls = save_images(form.images.data)
         
         # Create new listing
-        listing = Listing(
-            title=form.title.data,
-            description=form.description.data,
-            price=form.price.data,
-            quality=form.quality.data,
-            category=form.category.data,
-            tags=form.tags.data,
-            image_urls=','.join(image_urls) if image_urls else '',
-            user_id=current_user.id,
-            created_at=datetime.utcnow(),
-            expires_at=datetime.utcnow() + timedelta(days=30)
-        )
+        listing = Listing()
+        listing.title = form.title.data
+        listing.description = form.description.data
+        listing.price = form.price.data
+        listing.quality = form.quality.data
+        listing.category = form.category.data
+        listing.tags = form.tags.data
+        listing.image_urls = ','.join(image_urls) if image_urls else ''
+        listing.user_id = current_user.id
+        listing.created_at = datetime.utcnow()
+        listing.expires_at = datetime.utcnow() + timedelta(days=30)
         
         db.session.add(listing)
         db.session.commit()
