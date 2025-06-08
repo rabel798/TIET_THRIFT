@@ -23,11 +23,23 @@ app.secret_key = os.environ.get("SESSION_SECRET", "dev-secret-key-change-in-prod
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Configure the database
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///tiet_thrift.db")
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "pool_recycle": 300,
-    "pool_pre_ping": True,
-}
+database_url = os.environ.get("DATABASE_URL")
+if database_url:
+    # Production database - handle postgres:// to postgresql:// conversion for compatibility
+    if database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_recycle": 300,
+        "pool_pre_ping": True,
+    }
+else:
+    # Development database
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tiet_thrift.db"
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_recycle": 300,
+        "pool_pre_ping": True,
+    }
 app.config["UPLOAD_FOLDER"] = "static/uploads"
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16MB max file size
 
@@ -306,8 +318,9 @@ def edit_listing(listing_id):
             listing.expires_at = datetime.utcnow() + timedelta(days=30)
         
         # Handle new images if uploaded
-        if form.images.data and any(img.filename for img in form.images.data):
-            new_image_urls = save_images(form.images.data)
+        uploaded_files = [img for img in form.images.data if img and hasattr(img, 'filename') and img.filename]
+        if uploaded_files:
+            new_image_urls = save_images(uploaded_files)
             if new_image_urls:
                 listing.image_urls = ','.join(new_image_urls)
         
